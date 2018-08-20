@@ -12,7 +12,7 @@ SRC = libft_src/ft_atoi.c libft_src/ft_bzero.c libft_src/ft_isalnum.c libft_src/
 	libft_src/ft_putnbr_fd.c libft_src/ft_strrev.c libft_src/ft_wordlen.c libft_src/ft_intlen.c libft_src/ft_lstadd.c libft_src/ft_lstnew.c libft_src/ft_lstiter.c libft_src/ft_lstmap.c \
 	libft_src/get_next_line.c libft_src/ft_isspace.c  libft_src/ft_split.c libft_src/ft_intcpy.c libft_src/ft_atol.c libft_src/ft_deldouble.c libft_src/ft_doublesize.c \
 	libft_src/ft_printchardouble.c libft_src/ft_printintarray.c libft_src/ft_strmerge.c \
-	printf_src/basicchecker.c printf_src/createpadding.c printf_src/createstruc.c printf_src/destroy.c printf_src/dynamicstring.c printf_src/findhex.c printf_src/findoct.c printf_src/findops.c printf_src/findunsdigit.c \
+	printf_src/basicchecker.c printf_src/createpadding.c printf_src/createstruc.c printf_src/printf_destroy.c printf_src/dynamicstring.c printf_src/findhex.c printf_src/findoct.c printf_src/findops.c printf_src/findunsdigit.c \
 	printf_src/ft_itoa_base.c printf_src/ft_printf.c  printf_src/ft_uitoa.c printf_src/handlenonvalid.c printf_src/lengthmod.c printf_src/precision.c printf_src/strprocessing.c printf_src/ft_lltoa.c printf_src/wildcard.c \
 	printf_src/findwchar.c printf_src/findwstr.c printf_src/wcharsupport.c printf_src/finddigit.c printf_src/findpointer.c printf_src/paddingsupportfunc.c printf_src/hexhash.c printf_src/overflowfunc.c \
 	printf_src/findspecifer.c printf_src/findactions_one.c printf_src/findactions_two.c\
