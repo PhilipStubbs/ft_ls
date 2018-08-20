@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/03 09:27:25 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/20 10:22:47 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/20 14:55:05 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,9 @@ int		ft_printf(char *str, ...)
 	va_list		args;
 	int			error;
 	int			ret;
-	int			colourflag;
 
 	error = 0;
 	ret = 0;
-	colourflag = 0;
 	node = createstruc();
 	node->raw = ft_strdup(str);
 	va_start(args, str);

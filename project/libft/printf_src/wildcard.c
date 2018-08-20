@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/13 18:10:05 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/16 11:56:59 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/20 14:55:27 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,10 @@ void		wildcardbody_one(t_format *format, t_printf *node, int *hold, int i)
 void		wildcard(t_printf *node, t_format *format, va_list args)
 {
 	int	*hold;
-	int	nbr;
 	int	i;
 
 	node->isspaceswitch = istherespace(node->raw);
 	hold = populatehold(args, format);
-	nbr = 0;
 	i = format->start;
 	checkforcorrectminus(format, node->raw, hold, i);
 	wildcardbody_one(format, node, hold, i);

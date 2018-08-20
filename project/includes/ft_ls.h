@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:31:00 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/20 12:01:40 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/20 18:18:06 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,22 @@ typedef	struct		s_info
 {
 	char			*name;
 	char			*date;
-	char			*type;
+	char			*permis;
 	struct stat		stinfo;
 	struct s_info	*next;
 }					t_statinfo;
 
 typedef	struct		s_dir
 {
-	char			*dir;
+	char			*dirnam;
+	char			**comp;
+	t_statinfo		*hold;
 	struct s_dir	*next;
 }					t_dir;
 
 typedef	struct		s_ls
 {
-	t_statinfo		*hold;
-	t_dir			*curdir;
+	t_dir			*dir;
 	int				l;
 	int				recv;
 	int				a;
@@ -51,5 +52,6 @@ void				savecurdir(t_ls *node, char *name);
 char				*epochtostring(long long epoch);
 int					validflags(t_ls *node, char **arv);
 void				ft_ls(t_ls *node);
+void				setpermission(t_dir *cdir);
 
 #endif

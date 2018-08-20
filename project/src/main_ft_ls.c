@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:27:09 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/20 13:25:06 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/20 17:13:35 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		main(int arc, char **arv)
 	if (arc > 1)
 		error = validflags(node, arv +1);
 	// ft_printf("l=[%d] a=[%d] r=[%d] t=[%d] g=[%d] R=[%d] g=[%d]\n", node->l,node->a,node->r,node->t,node->g,node->recv,node->g);
-	if (error == 0)
+	if (error >= 0)
 		ft_ls(node);
 	destroy(error, node);
 	return (1);

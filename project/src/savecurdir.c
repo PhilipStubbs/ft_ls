@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 08:14:29 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/20 13:59:00 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/20 18:17:37 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,36 +40,102 @@
 //          int64_t         st_qspare[2];     /* RESERVED: DO NOT USE! */
 //      };
 
+// S_ISBLK(m)
+// Test for a block special file.
+// S_ISCHR(m)
+// Test for a character special file.
+// S_ISDIR(m)
+// Test for a directory.
+// S_ISFIFO(m)
+// Test for a pipe or FIFO special file.
+// S_ISREG(m)
+// Test for a regular file.
+// S_ISLNK(m)
+// Test for a symbolic link.
+// S_ISSOCK(m)
+// Test for a socket.
+
 t_statinfo	*createnew_stat_link(struct stat statinfo, char *nam)
 {
 	t_statinfo	*ret;
 
 	ret = (t_statinfo*)ft_memalloc(sizeof(t_statinfo));
 	ret->stinfo = statinfo;
-	ret->name = nam;
+	ret->name = ft_strdup(nam);
 	ret->next = NULL;
 	return (ret);
 }
 
-void	savelink(t_ls *node, struct stat statinfo, char *name)
+void	savestat_link(struct stat statinfo, char *name, t_dir *current)
 {
 	t_statinfo	*tmp;
-	t_statinfo	*head;
 
-	tmp = node->hold;
-	head = tmp;
-	if (node->hold == NULL)
-		node->hold = createnew_stat_link(statinfo, name);
+	tmp = current->hold;
+	if (current->hold == NULL)
+		current->hold = createnew_stat_link(statinfo, name);
 	else
 	{
 	while (tmp->next != NULL)
 		tmp = tmp->next;
 	tmp->next = createnew_stat_link(statinfo, name);
-	// ft_printf("[%s]\n", tmp->name);
-	
 	}
-	// node->hold = head;
-	// ft_printf("cuurent[%s]\n", node->hold->name);
+}
+
+t_dir	*createdir_link(char *dirname)
+{
+	t_dir	*ret;
+
+	ret = (t_dir*)ft_memalloc(sizeof(t_statinfo));
+	ret->dirnam = ft_strdup(dirname);
+	ret->comp = NULL;
+	ret->hold = NULL;
+	ret->next = NULL;
+	return (ret);
+}
+
+void	savedir_link(t_ls *node, char *name)
+{
+	t_dir	*tmp;
+
+	tmp = node->dir;
+	if (node->dir == NULL)
+		node->dir = createdir_link(name);
+	else
+	{
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = createdir_link(name);
+	}
+}
+
+int		dirnameexists(t_ls *node, char *dirname)
+{
+	t_dir	*tmp;
+	char	*ret;
+
+	tmp = node->dir;
+	while (tmp)
+	{
+		ret = ft_strstr(tmp->dirnam, dirname);
+		if (ret != NULL)
+		{
+			free(ret);
+			return (1);
+		}
+		free(ret);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+t_dir	*finddir_link(t_ls *node, char *dirname)
+{
+	t_dir	*tmp;
+
+	tmp = node->dir;
+	while (ft_strcmp(tmp->dirnam, dirname) != 0 && tmp)
+		tmp = tmp->next;
+	return (tmp);
 }
 
 void	savecurdir(t_ls *node, char *dirname)
@@ -77,7 +143,11 @@ void	savecurdir(t_ls *node, char *dirname)
 	DIR				*currentdir;
 	struct dirent	*nextdir;
 	struct stat		statinfo;
+	t_dir			*cdir;
 
+	if (dirnameexists(node, dirname) == 0)
+		savedir_link(node, dirname);
+	cdir = finddir_link(node, dirname);
 	currentdir = opendir(dirname);
 	if (currentdir == NULL)
 	{
@@ -87,8 +157,9 @@ void	savecurdir(t_ls *node, char *dirname)
 	while (((nextdir = readdir(currentdir)) != NULL))
 	{
 		stat(nextdir->d_name, &statinfo);
-		savelink(node, statinfo, nextdir->d_name);
+		savestat_link(statinfo, nextdir->d_name, cdir);
+		if (node->l)
+			setpermission(cdir);
 	}
-	// ft_printf("here[%s]\n",node->hold->name);
 	closedir(currentdir);
 }
