@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:41:02 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/20 18:23:57 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/20 19:08:04 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,19 @@ void	ft_ls(t_ls *node)
 {
 	// int	len;
 	t_dir	*tmp;
+	t_dir	*cdir;
+
 	savecurdir(node, ".");
 	savecurdir(node, "src");
+	cdir = node->dir;
+	if (node->l)
+	{
+		while (cdir)
+		{
+			setpermission(cdir);
+			cdir = cdir->next;
+		}
+	}
 	// if (node->recv == 1)s
 		// recursearch(node);
 	while (node->dir->hold != NULL)
@@ -33,7 +44,7 @@ void	ft_ls(t_ls *node)
 		node->dir->hold = node->dir->hold->next;
 	}
 	tmp = node->dir->next;
-	ft_printf("%s\n", tmp->dirnam);
+	ft_printf("%s/%s\n", node->dir->dirnam ,tmp->dirnam);
 	while (tmp->hold != NULL)
 	{
 		// len = ft_strlen(node->hold->name);

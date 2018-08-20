@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 08:14:29 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/20 18:17:37 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/20 19:09:28 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,8 +158,7 @@ void	savecurdir(t_ls *node, char *dirname)
 	{
 		stat(nextdir->d_name, &statinfo);
 		savestat_link(statinfo, nextdir->d_name, cdir);
-		if (node->l)
-			setpermission(cdir);
+		ft_printf("going in[%ld]\n",statinfo.st_rdev);
 	}
 	closedir(currentdir);
 }

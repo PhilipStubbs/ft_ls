@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 16:21:51 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/20 18:16:24 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/20 19:08:14 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,37 @@ void	setpermission(t_dir *cdir)
 	t_statinfo	*tmp;
 
 	tmp = cdir->hold;
-	// while (tmp != NULL)
-	// {
+	
+	while (tmp != NULL)
+	{
+		ft_printf("inside[%ld]\n",tmp->stinfo.st_mode);
 		tmp->permis = findpermission(tmp->stinfo.st_mode);
 		tmp = tmp->next;
-	// }
+	}
 }
+
+// -rw-r--r-- 1 pip users     8 Aug 20 14:53 author
+// -rwxr-xr-x 1 pip users 49896 Aug 20 18:44 ft_ls
+// drwxr-xr-x 2 pip users  4096 Aug 20 14:53 includes
+// drwxr-xr-x 5 pip users  4096 Aug 20 14:57 libft
+// -rw-r--r-- 1 pip users   518 Aug 20 16:28 makefile
+// drwxr-xr-x 2 pip users  4096 Aug 20 16:21 src
+
+// -rw-r--r-- 1 pip users 1242 Aug 20 14:57 epochtostring.c
+// -rw-r--r-- 1 pip users 3574 Aug 20 18:43 ft_ls.c
+// -rw-r--r-- 1 pip users 1337 Aug 20 17:13 main_ft_ls.c
+// -rw-r--r-- 1 pip users  910 Aug 20 16:17 recursearch.c
+// -rw-r--r-- 1 pip users 4732 Aug 20 18:17 savecurdir.c
+// -rw-r--r-- 1 pip users 2756 Aug 20 18:44 setpermission.c
+// -rw-r--r-- 1 pip users 1120 Aug 20 17:42 standardisedinitialised.c
+// -rw-r--r-- 1 pip users 1936 Aug 20 14:53 validflags.c
+
+// -rw-r--r--]    [makefile]
+// [drwxr-xr-x]    [src]
+// [-rw-r--r--]    [author]
+// [-rwxr-xr-x]    [ft_ls]
+// [drwxr-xr-x]    [libft]
+// [drwxr-xr-x]    [includes]
+// [drwxr-xr-x]    [.vscode]
+// [drwxr-xr-x]    [..]
+// [drwxr-xr-x]    [.]
