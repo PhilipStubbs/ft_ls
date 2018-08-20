@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 08:14:29 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/20 09:59:57 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/20 11:02:52 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ t_statinfo	*createnew_stat_link(struct stat statinfo, char *nam)
 {
 	t_statinfo	*ret;
 
+	ret = (t_statinfo*)ft_memalloc(sizeof(t_statinfo));
 	ret->stinfo = statinfo;
 	ret->name = nam;
 	ret->next = NULL;
+	return (ret);
 }
 
 void	savelink(t_ls *node, struct stat statinfo, char *name)
@@ -62,13 +64,13 @@ void	savelink(t_ls *node, struct stat statinfo, char *name)
 	node->hold = head;
 }
 
-void	savecurdir(t_ls *node, char *name)
+void	savecurdir(t_ls *node, char *dirname)
 {
 	DIR				*currentdir;
 	struct dirent	*nextdir;
 	struct stat		statinfo;
 
-	currentdir = opendir(name);
+	currentdir = opendir(dirname);
 	if (currentdir == NULL)
 	{
 		ft_printf("opening error");
@@ -77,6 +79,7 @@ void	savecurdir(t_ls *node, char *name)
 	while (((nextdir = readdir(currentdir)) != NULL))
 	{
 		stat(nextdir->d_name, &statinfo);
+		savelink(node, statinfo, nextdir->d_name);
 	}
 	closedir(currentdir);
 }

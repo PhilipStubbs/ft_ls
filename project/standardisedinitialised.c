@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 08:18:09 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/20 08:22:33 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/20 11:00:47 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ t_ls	*standardisedinitialised(void)
 {
 	t_ls	*ret;
 
+	ret = (t_ls*)ft_memalloc(sizeof(t_ls));
 	ret->hold = NULL;
 	ret->curdir = NULL;
 	ret->l = 0;

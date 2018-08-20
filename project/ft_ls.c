@@ -6,57 +6,36 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:27:09 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/20 10:21:35 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/20 11:28:55 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int		validflags(t_ls *node, char **arv)
-{
-	int	l;
-	int	ret;
 
-	l = 0;
-	ret = 1;
-	while (arv[l])
-	{
-		if (arv[l][0] != '-')
-			ret = -1;
-		if (arv[l][1] == 'l')
-			node->l == 1;
-		else if (arv[l][1] == 'a')
-			node->a == 1;
-		else if (arv[l][1] == 'r')
-			node->r == 1;
-		else if (arv[l][1] == 't')
-			node->t == 1;
-		else if (arv[l][1] == 'g')
-			node->g == 1;
-		else if (arv[l][1] == 'R')
-			node->recv == 1;
-		else
-			ret = -2;
-	}
-	return (ret);
+void	destroy(int error, t_ls *node)
+{
+	(void)node;
+	(void)error;
+	// if (error == -1)
+		// ft_printf("{RED}[%s]\n", "No such file or directory");
+	// if (error == -2)
+		// ft_printf("{RED}%s\n", "ft_ls: illegal option --");
 }
-// (!ft_strchr("srps", *cmd))
-	// ret->l = 0;
-	// ret->recv = 0;
-	// ret->a = 0;
-	// ret->r = 0;
-	// ret->t = 0;
-	// ret->g = 0;
 
-int	main(int arc, char **arv)
+int		main(int arc, char **arv)
 {
-	t_ls *node;
-	int	error;
+	t_ls	*node;
+	int		error;
 
 	node = standardisedinitialised();
+	error = 0;
 	if (arc > 1)
 		error = validflags(node, arv +1);
-	if (error == -1)
-		destroy(error, node)
+	// ft_printf("l=[%d] a=[%d] r=[%d] t=[%d] g=[%d] R=[%d] g=[%d]\n", node->l,node->a,node->r,node->t,node->g,node->recv,node->g);
+
+	// if (error == 0)
+	// 	ft_ls(node);
+	destroy(error, node);
 	return (1);
 }
