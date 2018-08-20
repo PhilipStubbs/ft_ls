@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 08:14:29 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/20 11:02:52 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/20 13:59:00 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,18 @@ void	savelink(t_ls *node, struct stat statinfo, char *name)
 
 	tmp = node->hold;
 	head = tmp;
-	while (tmp != NULL)
+	if (node->hold == NULL)
+		node->hold = createnew_stat_link(statinfo, name);
+	else
+	{
+	while (tmp->next != NULL)
 		tmp = tmp->next;
-	tmp = createnew_stat_link(statinfo, name);
-	node->hold = head;
+	tmp->next = createnew_stat_link(statinfo, name);
+	// ft_printf("[%s]\n", tmp->name);
+	
+	}
+	// node->hold = head;
+	// ft_printf("cuurent[%s]\n", node->hold->name);
 }
 
 void	savecurdir(t_ls *node, char *dirname)
@@ -81,5 +89,6 @@ void	savecurdir(t_ls *node, char *dirname)
 		stat(nextdir->d_name, &statinfo);
 		savelink(node, statinfo, nextdir->d_name);
 	}
+	// ft_printf("here[%s]\n",node->hold->name);
 	closedir(currentdir);
 }
