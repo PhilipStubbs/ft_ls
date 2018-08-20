@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy.c                                          :+:      :+:    :+:   */
+/*   standardisedinitialised.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/03 10:18:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/20 10:23:57 by pstubbs          ###   ########.fr       */
+/*   Created: 2018/08/20 08:18:09 by pstubbs           #+#    #+#             */
+/*   Updated: 2018/08/20 08:22:33 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "ft_ls.h"
 
-void	printf_destroy(t_printf **node)
+t_ls	*standardisedinitialised(void)
 {
-	free((*node)->output);
-	free((*node)->raw);
-	free(*node);
+	t_ls	*ret;
+
+	ret->hold = NULL;
+	ret->curdir = NULL;
+	ret->l = 0;
+	ret->recv = 0;
+	ret->a = 0;
+	ret->r = 0;
+	ret->t = 0;
+	ret->g = 0;
+	return (ret);
 }

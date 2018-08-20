@@ -1,66 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   proto.c                                            :+:      :+:    :+:   */
+/*   savecurdir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/18 14:40:02 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/20 08:13:41 by pstubbs          ###   ########.fr       */
+/*   Created: 2018/08/20 08:14:29 by pstubbs           #+#    #+#             */
+/*   Updated: 2018/08/20 09:59:57 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-#include <stdio.h>
-#include <time.h>
+
+	// char			*name;
+	// char			*date;
+	// char			*type;
+	// struct stat		stinfo;
+	// struct s_info	*next;
 
 
-
-
-int		main(int arc, char **arv)
-{
-	// time_t c;
-	DIR				*currentdir;
-	struct dirent	*nextdir;
-	struct stat		stinfo;
-	// char			buf[1024];
-	char			*myfun;
-	struct tm tm;
-
-	currentdir = opendir("."); 	//current location
-	if (currentdir == NULL)
-	{
-		ft_printf("null");
-		exit(1);
-	}
-	while (((nextdir = readdir(currentdir)) != NULL))
-	{
-		
-	
-		stat(nextdir->d_name, &stinfo);
-		// ft_printf("[%s]", nextdir->d_name);
-		// printf("		[%lld]", stinfo.st_size);
-		// printf("	[%ld]\n", stinfo.st_mtimespec.tv_sec);
-
-		// c = strtoul( ft_lltoa(stinfo.st_mtimespec.tv_sec), NULL, 0 );
-		// ctime( &c );
-
-
-		myfun = epochtostring(stinfo.st_mtimespec.tv_sec);
-		printf("		%s\n", myfun);
-
-		// ft_printf("[%s]\n", currentdir->);
-
-		// ft_printf("[%s]\n", sd->d_name);
-	}
-	closedir(currentdir);
-    return 0;
-}
-
-
-
-
-//    struct stat { /* when _DARWIN_FEATURE_64_BIT_INODE is defined */
+	//    struct stat { /* when _DARWIN_FEATURE_64_BIT_INODE is defined */
 //          dev_t           st_dev;           /* ID of device containing file */
 //          mode_t          st_mode;          /* Mode of file (see below) */
 //          nlink_t         st_nlink;         /* Number of hard links */
@@ -81,3 +40,43 @@ int		main(int arc, char **arv)
 //          int64_t         st_qspare[2];     /* RESERVED: DO NOT USE! */
 //      };
 
+t_statinfo	*createnew_stat_link(struct stat statinfo, char *nam)
+{
+	t_statinfo	*ret;
+
+	ret->stinfo = statinfo;
+	ret->name = nam;
+	ret->next = NULL;
+}
+
+void	savelink(t_ls *node, struct stat statinfo, char *name)
+{
+	t_statinfo	*tmp;
+	t_statinfo	*head;
+
+	tmp = node->hold;
+	head = tmp;
+	while (tmp != NULL)
+		tmp = tmp->next;
+	tmp = createnew_stat_link(statinfo, name);
+	node->hold = head;
+}
+
+void	savecurdir(t_ls *node, char *name)
+{
+	DIR				*currentdir;
+	struct dirent	*nextdir;
+	struct stat		statinfo;
+
+	currentdir = opendir(name);
+	if (currentdir == NULL)
+	{
+		ft_printf("opening error");
+		exit(1);
+	}
+	while (((nextdir = readdir(currentdir)) != NULL))
+	{
+		stat(nextdir->d_name, &statinfo);
+	}
+	closedir(currentdir);
+}

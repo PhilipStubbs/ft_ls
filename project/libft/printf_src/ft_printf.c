@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/03 09:27:25 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/15 16:51:55 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/20 10:22:47 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,6 @@ int		ft_printf(char *str, ...)
 	if (error == 0)
 		ft_printfbody(node, &ret);
 	ret -= node->lenmod;
-	destroy(&node);
+	printf_destroy(&node);
 	return (ret);
 }
