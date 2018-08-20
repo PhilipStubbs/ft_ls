@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ls.c                                            :+:      :+:    :+:   */
+/*   main_ft_ls.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:27:09 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/20 11:28:55 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/20 11:41:21 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@ void	destroy(int error, t_ls *node)
 {
 	(void)node;
 	(void)error;
-	// if (error == -1)
-		// ft_printf("{RED}[%s]\n", "No such file or directory");
-	// if (error == -2)
-		// ft_printf("{RED}%s\n", "ft_ls: illegal option --");
+
 }
 
 int		main(int arc, char **arv)
@@ -33,9 +30,8 @@ int		main(int arc, char **arv)
 	if (arc > 1)
 		error = validflags(node, arv +1);
 	// ft_printf("l=[%d] a=[%d] r=[%d] t=[%d] g=[%d] R=[%d] g=[%d]\n", node->l,node->a,node->r,node->t,node->g,node->recv,node->g);
-
-	// if (error == 0)
-	// 	ft_ls(node);
+	if (error == 0)
+		ft_ls(node);
 	destroy(error, node);
 	return (1);
 }

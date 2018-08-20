@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:31:00 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/20 11:20:04 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/20 12:01:40 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <sys/stat.h>
 # include <dirent.h>
 # include <time.h>
-# include "libft/includes/ft_printf.h"
+# include "ft_printf.h"
 
 typedef	struct		s_info
 {
@@ -50,5 +50,6 @@ t_ls				*standardisedinitialised(void);
 void				savecurdir(t_ls *node, char *name);
 char				*epochtostring(long long epoch);
 int					validflags(t_ls *node, char **arv);
+void				ft_ls(t_ls *node);
 
 #endif
