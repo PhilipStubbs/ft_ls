@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:31:00 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/21 10:58:55 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/21 15:04:00 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ void				setpermission(t_dir *cdir);
 void				savedir_link(t_ls *node, char *name);
 int					dirnameexists(t_ls *node, char *dirname);
 t_dir				*finddir_link(t_ls *node, char *dirname);
+void				destroydir(t_dir *dir);
+void				recursivesearch(t_ls *node);
 
+void				printtest(t_ls *node, t_dir *tmp);
 
 #endif

@@ -6,25 +6,47 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:41:02 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/21 11:34:38 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/21 15:01:21 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
+void	printtest(t_ls *node, t_dir *tmp)
+{
+	t_statinfo	*tmp2;
 
+	while (tmp)
+	{
+		ft_printf("%s\n", tmp->fulldir);
+		tmp2 = tmp->hold;
+		while (tmp2 != NULL)
+		{
+			if (node->l)
+				ft_printf("[%s]" ,tmp2->permis);
+
+			if (S_ISDIR(tmp2->stinfo.st_mode) == 1)
+				ft_printf("{CYN}%*c[%s]\n",5 ,0,tmp2->name);
+			else
+				ft_printf("%*c[%s]\n",5,0 ,tmp2->name);
+			tmp2 = tmp2->next;
+		}
+		ft_printf("\n");
+		tmp = tmp->next;
+	}
+}
 
 void	ft_ls(t_ls *node)
 {
-	// int	len;
-	t_dir	*tmp;
-	t_dir		*cdir;
+	t_dir	*cdir;
 
 	savecurdir(node, ".");
-	savecurdir(node, "src");
+	if (node->recv == 1)
+		recursivesearch(node);	
+	// savecurdir(node, "src");
+	// savecurdir(node, "..");
 	// savecurdir(node, "libft");
-	// cdir = node->dir;
-
+	
 	cdir = node->dir;
 	if (node->l)
 	{
@@ -36,63 +58,13 @@ void	ft_ls(t_ls *node)
 	}
 
 
-	// if (node->recv == 1)s
-		// recursearch(node);
-	tmp = node->dir;
-	while (tmp)
-	{
-		ft_printf("%s\n", tmp->fulldir);
-		while (tmp->hold != NULL)
-		{
-			// len = ft_strlen(node->hold->name);
-			if (node->l)
-				ft_printf("[%s]" ,tmp->hold->permis);
 
-			if (S_ISDIR(tmp->hold->stinfo.st_mode) == 1)
-				ft_printf("{CYN}%*c[%s]\n",5 ,0,tmp->hold->name);
-			else
-				ft_printf("%*c[%s]\n",5,0 ,tmp->hold->name);
-			tmp->hold = tmp->hold->next;
-		}
-		ft_printf("\n");
-		tmp = tmp->next;
-	}
-	// free(node->dir->hold->stinfo);
+	printtest(node ,node->dir);
 
+	// destroydir(node->dir->next);
+	destroydir(node->dir);
 	
-
-
-	// tmp = node->dir->next;
-	// ft_printf("%s\n", tmp->fulldir);
-	// while (tmp->hold != NULL)
-	// {
-	// 	// len = ft_strlen(node->hold->name);
-	// 	if (node->l)
-	// 		ft_printf("[%s]" ,tmp->hold->permis);
-
-	// 	if (S_ISDIR(tmp->hold->stinfo.st_mode) == 1)
-	// 		ft_printf("{CYN}%*c[%s]\n",5 ,0,tmp->hold->name);
-	// 	else
-	// 		ft_printf("%*c[%s]\n",5,0 ,tmp->hold->name);
-	// 	tmp->hold = tmp->hold->next;
-	// }
-
-
-	// 	tmp = node->dir->next->next;
-	// ft_printf("%s\n", tmp->fulldir);
-	// while (tmp->hold != NULL)
-	// {
-	// 	// len = ft_strlen(node->hold->name);
-	// 	if (node->l)
-	// 		ft_printf("[%s]" ,tmp->hold->permis);
-
-	// 	if (S_ISDIR(tmp->hold->stinfo.st_mode) == 1)
-	// 		ft_printf("{CYN}%*c[%s]\n",5 ,0,tmp->hold->name);
-	// 	else
-	// 		ft_printf("%*c[%s]\n",5,0 ,tmp->hold->name);
-	// 	tmp->hold = tmp->hold->next;
-	// }
-
+	
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 08:14:29 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/21 11:27:46 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/21 12:50:30 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,6 @@
 //          int32_t         st_lspare;        /* RESERVED: DO NOT USE! */
 //          int64_t         st_qspare[2];     /* RESERVED: DO NOT USE! */
 //      };
-
-// S_ISBLK(m)
-// Test for a block special file.
-// S_ISCHR(m)
-// Test for a character special file.
-// S_ISDIR(m)
-// Test for a directory.
-// S_ISFIFO(m)
-// Test for a pipe or FIFO special file.
-// S_ISREG(m)
-// Test for a regular file.
-// S_ISLNK(m)
-// Test for a symbolic link.
-// S_ISSOCK(m)
-// Test for a socket.
 
 t_statinfo	*createnew_stat_link(t_dir *current, char *nam)
 {
@@ -93,13 +78,10 @@ void	savecurdir(t_ls *node, char *dirname)
 
 	if (dirnameexists(node, dirname) == 0)
 		savedir_link(node, dirname);
+	else
+		return ;
 	cdir = finddir_link(node, dirname);
 	currentdir = opendir(dirname);
-	if (currentdir == NULL)
-	{
-		ft_printf("opening error");
-		exit(1);
-	}
 	while (((nextdir = readdir(currentdir)) != NULL))
 	{
 		savestat_link(nextdir->d_name, cdir);
@@ -108,6 +90,12 @@ void	savecurdir(t_ls *node, char *dirname)
 			chold = chold->next;
 		stat(chold->fulldir, &(chold->stinfo));
 	}
-	// free(nextdir);
 	closedir(currentdir);
 }
+
+
+// if (currentdir == NULL)
+// 	{
+// 		ft_printf("opening error");
+// 		exit(1);
+// 	}
