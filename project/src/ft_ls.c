@@ -6,20 +6,25 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:41:02 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/20 19:08:04 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/21 11:34:38 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
+
+
 void	ft_ls(t_ls *node)
 {
 	// int	len;
 	t_dir	*tmp;
-	t_dir	*cdir;
+	t_dir		*cdir;
 
 	savecurdir(node, ".");
 	savecurdir(node, "src");
+	// savecurdir(node, "libft");
+	// cdir = node->dir;
+
 	cdir = node->dir;
 	if (node->l)
 	{
@@ -29,35 +34,67 @@ void	ft_ls(t_ls *node)
 			cdir = cdir->next;
 		}
 	}
+
+
 	// if (node->recv == 1)s
 		// recursearch(node);
-	while (node->dir->hold != NULL)
+	tmp = node->dir;
+	while (tmp)
 	{
-		// len = ft_strlen(node->hold->name);
-		if (node->l)
-			ft_printf("[%s]" ,node->dir->hold->permis);
+		ft_printf("%s\n", tmp->fulldir);
+		while (tmp->hold != NULL)
+		{
+			// len = ft_strlen(node->hold->name);
+			if (node->l)
+				ft_printf("[%s]" ,tmp->hold->permis);
 
-		if (S_ISDIR(node->dir->hold->stinfo.st_mode) == 1)
-			ft_printf("{CYN}%*c[%s]\n",5 ,0,node->dir->hold->name);
-		else
-			ft_printf("%*c[%s]\n",5,0 ,node->dir->hold->name);
-		node->dir->hold = node->dir->hold->next;
+			if (S_ISDIR(tmp->hold->stinfo.st_mode) == 1)
+				ft_printf("{CYN}%*c[%s]\n",5 ,0,tmp->hold->name);
+			else
+				ft_printf("%*c[%s]\n",5,0 ,tmp->hold->name);
+			tmp->hold = tmp->hold->next;
+		}
+		ft_printf("\n");
+		tmp = tmp->next;
 	}
-	tmp = node->dir->next;
-	ft_printf("%s/%s\n", node->dir->dirnam ,tmp->dirnam);
-	while (tmp->hold != NULL)
-	{
-		// len = ft_strlen(node->hold->name);
-		if (node->l)
-			ft_printf("[%s]" ,tmp->hold->permis);
+	// free(node->dir->hold->stinfo);
 
-		if (S_ISDIR(tmp->hold->stinfo.st_mode) == 1)
-			ft_printf("{CYN}%*c[%s]\n",5 ,0,tmp->hold->name);
-		else
-			ft_printf("%*c[%s]\n",5,0 ,tmp->hold->name);
-		tmp->hold = tmp->hold->next;
-	}
+	
+
+
+	// tmp = node->dir->next;
+	// ft_printf("%s\n", tmp->fulldir);
+	// while (tmp->hold != NULL)
+	// {
+	// 	// len = ft_strlen(node->hold->name);
+	// 	if (node->l)
+	// 		ft_printf("[%s]" ,tmp->hold->permis);
+
+	// 	if (S_ISDIR(tmp->hold->stinfo.st_mode) == 1)
+	// 		ft_printf("{CYN}%*c[%s]\n",5 ,0,tmp->hold->name);
+	// 	else
+	// 		ft_printf("%*c[%s]\n",5,0 ,tmp->hold->name);
+	// 	tmp->hold = tmp->hold->next;
+	// }
+
+
+	// 	tmp = node->dir->next->next;
+	// ft_printf("%s\n", tmp->fulldir);
+	// while (tmp->hold != NULL)
+	// {
+	// 	// len = ft_strlen(node->hold->name);
+	// 	if (node->l)
+	// 		ft_printf("[%s]" ,tmp->hold->permis);
+
+	// 	if (S_ISDIR(tmp->hold->stinfo.st_mode) == 1)
+	// 		ft_printf("{CYN}%*c[%s]\n",5 ,0,tmp->hold->name);
+	// 	else
+	// 		ft_printf("%*c[%s]\n",5,0 ,tmp->hold->name);
+	// 	tmp->hold = tmp->hold->next;
+	// }
+
 }
+
 
 	//    struct stat { /* when _DARWIN_FEATURE_64_BIT_INODE is defined */
 //          dev_t           st_dev;           /* ID of device containing file */

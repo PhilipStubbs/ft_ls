@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 16:21:51 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/20 19:08:14 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/21 10:36:09 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	findpermission_part2(long long permis, char **ret)
 		dynamicchar(ret, 'x');
 	else
 		dynamicchar(ret, '-');
-	// if (S_IFLNK(permis))
-	// 	dynamicchar(&ret, '@');
+	// if (permis & S_IFLNK)
+	// 	dynamicchar(ret, '@');
 }
 
 char	*findpermission(long long permis)
@@ -82,10 +82,9 @@ void	setpermission(t_dir *cdir)
 	t_statinfo	*tmp;
 
 	tmp = cdir->hold;
-	
 	while (tmp != NULL)
 	{
-		ft_printf("inside[%ld]\n",tmp->stinfo.st_mode);
+		// ft_printf("inside[%ld] name%s\n", tmp->stinfo->st_mode, tmp->name);
 		tmp->permis = findpermission(tmp->stinfo.st_mode);
 		tmp = tmp->next;
 	}
