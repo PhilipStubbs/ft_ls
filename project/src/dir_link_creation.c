@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 10:56:53 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/21 13:40:40 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/21 16:53:21 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,13 @@ t_dir	*createdir_link(char *dirname)
 
 	ret = (t_dir*)ft_memalloc(sizeof(t_statinfo));
 	ret->dirnam = ft_strdup(dirname);
-	ret->comp = NULL;
-	ret->hold = NULL;
+	// ret->comp = createnewdouble(ret, ".");
+	// ret->comp = createnewdouble(ret, "..");
+	ret->comp = (char**)ft_memalloc(sizeof(char *) * 3);
+	ret->comp[0] = ft_strdup(".");
+	ret->comp[1] = ft_strdup("..");
+	ret->comp[2] = NULL;
+	ret->files = NULL;
 	ret->next = NULL;
 	return (ret);
 }

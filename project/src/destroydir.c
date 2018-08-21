@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 12:56:31 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/21 13:35:59 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/21 16:52:48 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,38 @@ void	destroystatinfo(t_statinfo *info)
 	free(info);
 }
 
+void	freedouble(char **ar, int n)
+{
+	int e;
+
+	e = 0;
+	while (e < n)
+	{
+		free(ar[e]);
+		e++;
+	}
+	free(ar);
+}
+
 void	destroydir(t_dir *dir)
 {
 	// t_statinfo	*tmp;
+	int	i;
 
-	// dir->hold;
-	while (dir->hold)
+	// dir->files;
+	i = 0;
+	while (dir->files)
 	{
-		destroystatinfo(dir->hold);
-		dir->hold = dir->hold->next;
+		destroystatinfo(dir->files);
+		dir->files = dir->files->next;
 	}
 	free(dir->dirnam);
 	free(dir->fulldir);
 	if (dir->comp)
-		free(dir->comp);
+	{
+		i = ft_doublesize(dir->comp);
+		freedouble(dir->comp, i);
+	}
 	free(dir);
 }
 
@@ -56,6 +74,6 @@ void	destroydir(t_dir *dir)
 // 	char			*dirnam;
 // 	char			*fulldir;
 // 	char			**comp;
-// 	t_statinfo		*hold;
+// 	t_statinfo		*files;
 // 	struct s_dir	*next;
 // }					t_dir;

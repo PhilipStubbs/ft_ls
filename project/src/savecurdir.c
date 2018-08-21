@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 08:14:29 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/21 12:50:30 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/21 16:04:59 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void	savestat_link(char *name, t_dir *current)
 {
 	t_statinfo	*tmp;
 
-	tmp = current->hold;
-	if (current->hold == NULL)
-		current->hold = createnew_stat_link(current, name);
+	tmp = current->files;
+	if (current->files == NULL)
+		current->files = createnew_stat_link(current, name);
 	else
 	{
 		while (tmp->next != NULL)
@@ -74,7 +74,7 @@ void	savecurdir(t_ls *node, char *dirname)
 	DIR				*currentdir;
 	struct dirent	*nextdir;
 	t_dir			*cdir;
-	t_statinfo		*chold;
+	t_statinfo		*cfiles;
 
 	if (dirnameexists(node, dirname) == 0)
 		savedir_link(node, dirname);
@@ -82,13 +82,18 @@ void	savecurdir(t_ls *node, char *dirname)
 		return ;
 	cdir = finddir_link(node, dirname);
 	currentdir = opendir(dirname);
+	if (currentdir == NULL)
+	{
+		ft_printf("opening error");
+		exit(1);
+	}
 	while (((nextdir = readdir(currentdir)) != NULL))
 	{
 		savestat_link(nextdir->d_name, cdir);
-		chold = cdir->hold;
-		while (ft_strcmp(nextdir->d_name, chold->name) != 0)
-			chold = chold->next;
-		stat(chold->fulldir, &(chold->stinfo));
+		cfiles = cdir->files;
+		while (ft_strcmp(nextdir->d_name, cfiles->name) != 0)
+			cfiles = cfiles->next;
+		stat(cfiles->fulldir, &(cfiles->stinfo));
 	}
 	closedir(currentdir);
 }
