@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 08:14:29 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/21 16:04:59 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/21 17:46:07 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	savecurdir(t_ls *node, char *dirname)
 	else
 		return ;
 	cdir = finddir_link(node, dirname);
-	currentdir = opendir(dirname);
+	currentdir = opendir(cdir->fulldir);
 	if (currentdir == NULL)
 	{
 		ft_printf("opening error");

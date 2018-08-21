@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 12:56:31 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/21 16:52:48 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/21 18:04:58 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,13 @@ void	destroydir(t_dir *dir)
 
 	// dir->files;
 	i = 0;
+	write(1,"X\n",2); 
 	while (dir->files)
 	{
 		destroystatinfo(dir->files);
 		dir->files = dir->files->next;
 	}
+	
 	free(dir->dirnam);
 	free(dir->fulldir);
 	if (dir->comp)
