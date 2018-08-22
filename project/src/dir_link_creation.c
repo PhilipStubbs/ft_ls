@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 10:56:53 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/22 08:16:04 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/22 12:17:58 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ t_dir	*createdir_link(char *dirname)
 
 	ret = (t_dir*)ft_memalloc(sizeof(t_statinfo));
 	ret->dirnam = ft_strdup(dirname);
-	// ret->comp = createnewdouble(ret, ".");
-	// ret->comp = createnewdouble(ret, "..");
 	ret->comp = (char**)ft_memalloc(sizeof(char *) * 3);
 	ret->comp[0] = ft_strdup(".");
 	ret->comp[1] = ft_strdup("..");
@@ -41,11 +39,27 @@ t_dir	*createdir_link(char *dirname)
 	return (ret);
 }
 
+int		dircount(t_ls *node)
+{
+	t_dir	*cdir;
+	int		count;
+
+	count = 0;
+	cdir = node->dir;
+	while (cdir)
+	{
+		count++;
+		cdir = cdir->next;
+	}
+	return (count);
+}
+
 void	savedir_link(t_ls *node, char *name)
 {
 	t_dir	*tmp;
 	char	*tmpstr;
 	t_dir	*cdir;
+	// int		size;
 
 	tmp = node->dir;
 	if (node->dir == NULL)
@@ -56,17 +70,21 @@ void	savedir_link(t_ls *node, char *name)
 			tmp = tmp->next;
 		tmp->next = createdir_link(name);
 	}
+	// size = dircount(node) - 1;
 	cdir = node->dir;
 	tmpstr = ft_strnew(1);
-	while (ft_strcmp(cdir->dirnam, name) != 0)
+	while (cdir->next)   //size > 0)// ft_strcmp(cdir->dirnam, name) != 0  )
 	{
 		tmpstr = dynamicstring(&tmpstr, cdir->dirnam);
 		tmpstr = dynamicstring(&tmpstr, "/");
 		cdir = cdir->next;
+		// size--;
 	}
 	tmpstr = dynamicstring(&tmpstr, cdir->dirnam);
 	if (cdir->fulldir == NULL)
 		cdir->fulldir = ft_strdup(tmpstr);
+	// ft_printf("dirname[%s]\n", cdir->fulldir);
+	// ft_printf("nanm[%s] dir[%s]\n",cdir->dirnam, cdir->fulldir);
 	free(tmpstr);
 }
 

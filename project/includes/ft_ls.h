@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:31:00 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/22 08:13:31 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/22 11:10:14 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,7 @@ void				findsetpermission(t_ls *node, char *name);
 
 void				printtest(t_ls *node, t_dir *tmp);
 void				printdir(t_ls *node, t_dir *tmp);
+void				destroylast_dir(t_ls *node);
+t_dir				*findlast(t_ls *node);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 08:14:29 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/21 17:46:07 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/22 12:54:51 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,16 @@ t_statinfo	*createnew_stat_link(t_dir *current, char *nam)
 	return (ret);
 }
 
+// typedef	struct		s_info
+// {
+// 	char			*name;
+// 	char			*fulldir;
+// 	char			*date;
+// 	char			*permis;
+// 	struct stat		stinfo;
+// 	struct s_info	*next;
+// }					t_statinfo;
+
 void	savestat_link(char *name, t_dir *current)
 {
 	t_statinfo	*tmp;
@@ -76,11 +86,17 @@ void	savecurdir(t_ls *node, char *dirname)
 	t_dir			*cdir;
 	t_statinfo		*cfiles;
 
-	if (dirnameexists(node, dirname) == 0)
+	// if (dirnameexists(node, dirname) == 0)
+	// {
 		savedir_link(node, dirname);
-	else
-		return ;
-	cdir = finddir_link(node, dirname);
+		// cdir = finddir_link(node, dirname);
+	// }
+	// else
+	// {
+		// savedir_link(node, dirname);
+		cdir = findlast(node);
+	// }
+	// 	return ;
 	currentdir = opendir(cdir->fulldir);
 	if (currentdir == NULL)
 	{

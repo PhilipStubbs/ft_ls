@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 12:56:31 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/22 08:33:40 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/22 13:20:26 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,14 @@ void	freedouble(char **ar, int n)
 
 void	destroydir(t_dir *dir)
 {
-	// t_statinfo	*tmp;
 	int	i;
 
-	// dir->files;
 	i = 0;
 	while (dir->files)
 	{
 		destroystatinfo(dir->files);
 		dir->files = dir->files->next;
 	}
-	
 	free(dir->dirnam);
 	free(dir->fulldir);
 	if (dir->comp)
@@ -58,23 +55,14 @@ void	destroydir(t_dir *dir)
 	free(dir);
 }
 
+void	destroylast_dir(t_ls *node)
+{
+	t_dir *cdir;
 
-
-// {
-// 	char			*name;
-// 	char			*fulldir;
-// 	char			*date;
-// 	char			*permis;
-// 	struct stat		stinfo;
-// 	struct s_info	*next;
-// }	
-
-
-// typedef	struct		s_dir
-// {
-// 	char			*dirnam;
-// 	char			*fulldir;
-// 	char			**comp;
-// 	t_statinfo		*files;
-// 	struct s_dir	*next;
-// }					t_dir;
+	cdir = node->dir;
+	while (cdir->next != NULL && (cdir->next->next != NULL))
+		cdir = cdir->next;
+	destroydir(cdir->next);
+	cdir->next = NULL;
+	
+}

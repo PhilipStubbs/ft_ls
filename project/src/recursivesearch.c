@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 16:17:35 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/22 08:44:31 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/22 13:16:41 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*finddirs(t_ls *node)
 
 	while (file)
 	{
-		if (S_ISDIR(file->stinfo.st_mode) == 1 && ft_strncmp(file->name, "." , 1) != 0)
+		if (S_ISDIR(file->stinfo.st_mode) == 1) //&& ft_strncmp(file->name, "." , 1) != 0)
 		{
 			i = 0;
 			while (tmpdir->comp[i] != NULL)
@@ -66,18 +66,6 @@ t_dir	*finddir(t_ls *node, char *name)
 	return (cdir);
 }
 
-void	destroylast_dir(t_ls *node)
-{
-	t_dir *cdir;
-
-	cdir = node->dir;
-	while (cdir->next != NULL && (cdir->next->next != NULL))
-		cdir = cdir->next;
-	destroydir(cdir->next);
-	cdir->next = NULL;
-	
-}
-
 t_dir	*findlast(t_ls *node)
 {
 	t_dir *cdir;
@@ -88,15 +76,35 @@ t_dir	*findlast(t_ls *node)
 	return (cdir);
 }
 
+int		numberofdirs(t_dir *cdir)
+{
+	t_statinfo	*file;
+	int	count;
+
+	count = 0;
+	file = cdir->files;
+	while (file)
+	{
+		if (S_ISDIR(file->stinfo.st_mode) == 1 &&
+		ft_strcmp(file->name, ".") != 0 &&
+		ft_strcmp(file->name, "..") != 0)
+			count++;
+		file = file->next;
+	}
+	return (count);
+}
+
 void	recursivesearch(t_ls *node)
 {
 	char	*nextdir;
 	t_dir	*cdir;
 	int		i;
+	int		maxbasedir;
 
 	printdir(node, node->dir);
 	i = 0;
-	while (i < 20)
+	maxbasedir = numberofdirs(node->dir);
+	while (i < maxbasedir)
 	{
 		nextdir = finddirs(node);
 		if (nextdir != NULL)
@@ -108,8 +116,16 @@ void	recursivesearch(t_ls *node)
 			free(nextdir);
 		}
 		else if (nextdir == NULL)
+		{
+			// ft_printf("[%s]\n",NULL);
 			destroylast_dir(node);
-		i++;
+		}
+		cdir = findlast(node);
+		if (ft_strcmp(cdir->dirnam, node->dir->dirnam) == 0)
+			i++;
 	}
-
 }
+
+// ./ Filler_Visualizer-master/ visualizer/ frameworks/ SDL2_image.framework/ Frameworks /webp.framework/ Headers 7
+// ./ Algo 1/ Filler_Visualizer-master/ visualizer/ frameworks/ SDL2.framework/ Versions 6
+// ./ Completed Projects/ Algo 1/ filler/ .git/ objects/ ea  6

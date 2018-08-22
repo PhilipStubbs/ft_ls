@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 16:21:51 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/21 17:58:30 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/22 11:25:53 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,11 @@ void	findsetpermission(t_ls *node, char *name)
 {
 	t_dir *cdir;
 
-	cdir = node->dir;
-	while (cdir && ft_strcmp(name, cdir->dirnam))
-		cdir = cdir->next;
+	// cdir = node->dir;
+	(void)name;
+	cdir = findlast(node);
+	// while (cdir && ft_strcmp(name, cdir->dirnam))
+	// 	cdir = cdir->next;
 	setpermission(cdir);
 }
 

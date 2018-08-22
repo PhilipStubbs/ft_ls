@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:41:02 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/22 08:32:23 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/22 12:01:04 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,11 @@ void	ft_ls(t_ls *node)
 	if (node->recv == 0)
 		printtest(node ,node->dir);
 
-	// destroydir(node->dir->next);
-	destroydir(node->dir);
+	while (node->dir)
+	{
+		destroydir(node->dir);
+		node->dir = node->dir->next;
+	}
 	
 	
 }
