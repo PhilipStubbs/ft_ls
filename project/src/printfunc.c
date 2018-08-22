@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 16:13:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/22 17:26:48 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/22 18:03:09 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,37 @@ void	sortfile(t_ls *node, t_dir *tmp)
 
 }
 
+void	printfull(t_statinfo *file)
+{
+	struct passwd	*users;
+	struct group	*grp;
+	char			*date;
+
+	date = epochtostring(file->stinfo.st_birthtimespec)
+	users = getpwuid(file->stinfo.st_uid);
+	grp = getgrgid(file->stinfo.st_gid);
+	ft_printf("%s %s %s %lld", 
+	file->permis, users->pw_name, grp->gr_name, file->stinfo.st_size);
+
+}
+
 void	printdir(t_ls *node, t_dir *tmp)
 {
-	t_statinfo	*tmp2;
+	t_statinfo	*file;
 	sortfile(node, tmp);
-	// write(1,"X\n",2); 
 	ft_printf("%s\n", tmp->fulldir);
-	tmp2 = tmp->files;
-	while (tmp2 != NULL)
+	file = tmp->files;
+	while (file != NULL)
 	{
 		if (node->l)
-			ft_printf("[%s]", tmp2->permis);
+			printfull(file);
 
-		if (S_ISDIR(tmp2->stinfo.st_mode) == 1)
-			ft_printf("{CYN}%*c[%s]\n", 5, 0, tmp2->name);
+		if (S_ISDIR(file->stinfo.st_mode) == 1)
+			ft_printf("{CYN}%*c[%s]\n", 5, 0, file->name);
 		else
-			ft_printf("%*c[%s]\n", 5, 0, tmp2->name);
-			// ft_printf("	[%s]\n",epochtostring(tmp2->stinfo.s);
-		tmp2 = tmp2->next;
+			ft_printf("%*c[%s]\n", 5, 0, file->name);
+			// ft_printf("	[%s]\n",epochtostring(file->stinfo.s);
+		file = file->next;
 	}
 	ft_printf("\n");
 }
