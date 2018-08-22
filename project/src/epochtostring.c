@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 08:12:57 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/21 15:35:32 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/22 13:50:28 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,12 @@ char	*epochtostring(long long epoch)
 {
 	char		*ret;
 	char		*tmp;
-	struct tm	files;
+	int			len;
+	time_t		c;
 
-	tmp = ft_lltoa(epoch);
-	ret = ft_strnew(1024);
-	ft_memset(&files, 0, sizeof(struct tm));
-	strptime(tmp, "%s", &files);
-	strftime(ret, 1024, "%b %d %H:%M %Y", &files);
-	// free(files);
-	free(tmp);
+	c = (unsigned long long)epoch;
+	ret = ctime(&c);
+	len = ft_strlen(ret);
+	tmp = ft_strsub(ret,0, (size_t)len -1);
 	return (tmp);
-
-	// return (ret);
 }

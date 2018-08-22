@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:41:02 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/22 12:01:04 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/22 13:50:08 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	printdir(t_ls *node, t_dir *tmp)
 void	ft_ls(t_ls *node)
 {
 	t_dir	*cdir;
+	char	*tmp;
 
 	savecurdir(node, ".");
 	// savecurdir(node, "src");
@@ -66,6 +67,9 @@ void	ft_ls(t_ls *node)
 	// savecurdir(node, "libft");
 	
 	cdir = node->dir;
+	tmp = epochtostring(cdir->files->stinfo.st_birthtimespec.tv_sec);
+	ft_printf("here[%s]\n",tmp);
+	free(tmp);
 	if (node->l)
 	{
 		while (cdir)
