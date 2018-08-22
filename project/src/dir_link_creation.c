@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 10:56:53 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/21 16:53:21 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/22 08:16:04 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ t_dir	*createdir_link(char *dirname)
 	ret->comp[0] = ft_strdup(".");
 	ret->comp[1] = ft_strdup("..");
 	ret->comp[2] = NULL;
+	ret->compcoun = 0;
+	ret->dircoun = 0;
 	ret->files = NULL;
 	ret->next = NULL;
 	return (ret);

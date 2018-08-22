@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 16:17:35 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/21 18:06:16 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/22 08:44:31 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ char	*finddirs(t_ls *node)
 				else
 					i++;
 			}
-			// ft_printf("out[%s]\n", file->name);
 			if (i >= 0)
 			{
 				ret = ft_strdup(file->name);
@@ -54,9 +53,6 @@ char	*finddirs(t_ls *node)
 	}
 	if (ret != NULL)
 		tmpdir->comp = createnewdouble(tmpdir, ret);
-	// ft_printchardouble(tmpdir->comp);
-	// if (ret == NULL)
-	// 	destroydir(tmpdir);
 	return (ret);
 }
 
@@ -70,34 +66,50 @@ t_dir	*finddir(t_ls *node, char *name)
 	return (cdir);
 }
 
+void	destroylast_dir(t_ls *node)
+{
+	t_dir *cdir;
+
+	cdir = node->dir;
+	while (cdir->next != NULL && (cdir->next->next != NULL))
+		cdir = cdir->next;
+	destroydir(cdir->next);
+	cdir->next = NULL;
+	
+}
+
+t_dir	*findlast(t_ls *node)
+{
+	t_dir *cdir;
+
+	cdir = node->dir;
+	while (cdir->next)
+		cdir = cdir->next;
+	return (cdir);
+}
+
 void	recursivesearch(t_ls *node)
 {
 	char	*nextdir;
-	t_dir *cdir;
+	t_dir	*cdir;
+	int		i;
 
-	nextdir = finddirs(node);
-	if (nextdir != NULL)
+	printdir(node, node->dir);
+	i = 0;
+	while (i < 20)
 	{
-		savecurdir(node, nextdir);
-		findsetpermission(node, nextdir);
+		nextdir = finddirs(node);
+		if (nextdir != NULL)
+		{
+			savecurdir(node, nextdir);
+			findsetpermission(node, nextdir);
+			cdir = findlast(node);
+			printdir(node, cdir);
+			free(nextdir);
+		}
+		else if (nextdir == NULL)
+			destroylast_dir(node);
+		i++;
 	}
-	free(nextdir);
-	nextdir = finddirs(node);
-	if (nextdir != NULL)
-	{
-		savecurdir(node, nextdir);
-		findsetpermission(node, nextdir);
-	}
-	cdir = finddir(node, nextdir);
-	// ft_printf("[%s]\n", cdir->next->dirnam);
-	// destroydir(cdir->next);
-	free(nextdir);
-	
-	// ft_printf("HERE[%s]\n", node->dir->comp[0]);
-	// ft_printf("HERE[%s]\n", node->dir->comp[1]);
-	// ft_printf("HERE[%s]\n", node->dir->comp[2]);
-	// nextdir = finddirs(node);
-	// if (nextdir != NULL)
-	// 	savecurdir(node, nextdir);
-	// free(nextdir);
+
 }

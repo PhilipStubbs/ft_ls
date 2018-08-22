@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:41:02 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/21 17:59:16 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/22 08:32:23 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,26 @@ void	printtest(t_ls *node, t_dir *tmp)
 	}
 }
 
+void	printdir(t_ls *node, t_dir *tmp)
+{
+	t_statinfo	*tmp2;
+
+	ft_printf("%s\n", tmp->fulldir);
+	tmp2 = tmp->files;
+	while (tmp2 != NULL)
+	{
+		if (node->l)
+			ft_printf("[%s]", tmp2->permis);
+
+		if (S_ISDIR(tmp2->stinfo.st_mode) == 1)
+			ft_printf("{CYN}%*c[%s]\n", 5, 0, tmp2->name);
+		else
+			ft_printf("%*c[%s]\n", 5, 0, tmp2->name);
+		tmp2 = tmp2->next;
+	}
+	ft_printf("\n");
+}
+
 void	ft_ls(t_ls *node)
 {
 	t_dir	*cdir;
@@ -56,8 +76,8 @@ void	ft_ls(t_ls *node)
 	}
 	if (node->recv == 1)
 		recursivesearch(node);
-
-	printtest(node ,node->dir);
+	if (node->recv == 0)
+		printtest(node ,node->dir);
 
 	// destroydir(node->dir->next);
 	destroydir(node->dir);

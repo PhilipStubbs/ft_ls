@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:31:00 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/21 17:57:39 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/22 08:13:31 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ typedef	struct		s_dir
 	char			*dirnam;
 	char			*fulldir;
 	char			**comp;
+	int				compcoun;
+	int				dircoun;
 	t_statinfo		*files;
 	struct s_dir	*next;
 }					t_dir;
@@ -65,5 +67,6 @@ void				freedouble(char **ar, int n);
 void				findsetpermission(t_ls *node, char *name);
 
 void				printtest(t_ls *node, t_dir *tmp);
+void				printdir(t_ls *node, t_dir *tmp);
 
 #endif
