@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:31:00 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/22 11:10:14 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/22 17:27:06 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ void				recursivesearch(t_ls *node);
 char				**createnewdouble(t_dir *current, char *adding);
 void				freedouble(char **ar, int n);
 void				findsetpermission(t_ls *node, char *name);
+void				alphasortfile(t_dir *tmp);
+void				revalphasortfile(t_dir *tmp);
+void				birthsortfile(t_dir *tmp);
+void				revbirthsortfile(t_dir *tmp);
+int					stringcomp(char *str1, char *str2);
 
 void				printtest(t_ls *node, t_dir *tmp);
 void				printdir(t_ls *node, t_dir *tmp);

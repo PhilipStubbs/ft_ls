@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:41:02 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/22 13:55:28 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/22 16:29:48 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,6 @@ void	printtest(t_ls *node, t_dir *tmp)
 	}
 }
 
-void	printdir(t_ls *node, t_dir *tmp)
-{
-	t_statinfo	*tmp2;
-
-	ft_printf("%s\n", tmp->fulldir);
-	tmp2 = tmp->files;
-	while (tmp2 != NULL)
-	{
-		if (node->l)
-			ft_printf("[%s]", tmp2->permis);
-
-		if (S_ISDIR(tmp2->stinfo.st_mode) == 1)
-			ft_printf("{CYN}%*c[%s]\n", 5, 0, tmp2->name);
-		else
-			ft_printf("%*c[%s]", 5, 0, tmp2->name);
-			ft_printf("	[%s]\n",epochtostring(tmp2->stinfo.st_birthtimespec.tv_sec));
-		tmp2 = tmp2->next;
-	}
-	ft_printf("\n");
-}
-
 void	ft_ls(t_ls *node)
 {
 	t_dir	*cdir;
@@ -78,14 +57,15 @@ void	ft_ls(t_ls *node)
 	}
 	if (node->recv == 1)
 		recursivesearch(node);
-	if (node->recv == 0)
-		printtest(node ,node->dir);
+	// if (node->recv == 0)
+		// printtest(node ,node->dir);
+	printdir(node ,node->dir);
 
-	while (node->dir)
-	{
-		destroydir(node->dir);
-		node->dir = node->dir->next;
-	}
+	// while (node->dir)
+	// {
+		// destroydir(node->dir);
+	// 	node->dir = node->dir->next;
+	// }
 	
 	
 }
