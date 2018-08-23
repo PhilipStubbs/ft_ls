@@ -11,7 +11,7 @@ all: $(NAME)
 
 $(NAME):
 	make -C libft/
-	gcc -c -Wall -Werror -Wextra $(SRC) -I ./includes/ -I ./libft/includes/
+	gcc -c -Wall -Werror -Wextra $(SRC) -I ./includes/ -I ./libft/includes/ -g
 	gcc -o $(NAME) $(OBJ) -I ./includes/ -I ./libft/includes/ -L. libft/libft.a
 	rm -f $(OBJ)
 

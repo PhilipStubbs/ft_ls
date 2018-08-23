@@ -6,18 +6,20 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 16:13:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/22 18:03:09 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 09:27:04 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+ #include <pwd.h>
+  #include <grp.h>
+
 
 void	sortfile(t_ls *node, t_dir *tmp)
 {
 	// t_statinfo	*file;
 	(void)node;
-	revbirthsortfile(tmp);
-
+	alphasortfile(tmp);
 }
 
 void	printfull(t_statinfo *file)
@@ -26,18 +28,21 @@ void	printfull(t_statinfo *file)
 	struct group	*grp;
 	char			*date;
 
-	date = epochtostring(file->stinfo.st_birthtimespec)
+	date = epochtostring(file->stinfo.st_birthtimespec.tv_sec);
 	users = getpwuid(file->stinfo.st_uid);
 	grp = getgrgid(file->stinfo.st_gid);
-	ft_printf("%s %s %s %lld", 
-	file->permis, users->pw_name, grp->gr_name, file->stinfo.st_size);
+	ft_printf("%s %s %s %lld %s", 
+	file->permis, users->pw_name, grp->gr_name, file->stinfo.st_size, date, file->name);
+	free(users);
+	free(grp);
+	free(date);
 
 }
 
 void	printdir(t_ls *node, t_dir *tmp)
 {
 	t_statinfo	*file;
-	sortfile(node, tmp);
+	// sortfile(node, tmp);
 	ft_printf("%s\n", tmp->fulldir);
 	file = tmp->files;
 	while (file != NULL)

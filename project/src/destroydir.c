@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 12:56:31 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/22 16:15:50 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 09:28:21 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,4 @@ void	destroylast_dir(t_ls *node)
 		cdir = cdir->next;
 	destroydir(cdir->next);
 	cdir->next = NULL;
-	
 }
