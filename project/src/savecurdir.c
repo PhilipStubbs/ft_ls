@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 08:14:29 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 12:37:40 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 14:47:55 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,17 +86,8 @@ void	savecurdir(t_ls *node, char *dirname)
 	t_dir			*cdir;
 	t_statinfo		*cfiles;
 
-	// if (dirnameexists(node, dirname) == 0)
-	// {
-		savedir_link(node, dirname);
-		// cdir = finddir_link(node, dirname);
-	// }
-	// else
-	// {
-		// savedir_link(node, dirname);
-		cdir = findlast(node);
-	// }
-	// 	return ;
+	savedir_link(node, dirname);
+	cdir = findlast(node);
 	currentdir = opendir(cdir->fulldir);
 	if (currentdir == NULL)
 	{

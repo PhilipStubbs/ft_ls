@@ -6,23 +6,12 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 16:21:51 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 13:31:20 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 14:08:15 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-    // printf("File Permissions: \t");
-    // printf( (S_ISDIR(fileStat.st_mode)) ? "d" : "-");
-    // printf( (fileStat.st_mode & S_IRUSR) ? "r" : "-");
-    // printf( (fileStat.st_mode & S_IWUSR) ? "w" : "-");
-    // printf( (fileStat.st_mode & S_IXUSR) ? "x" : "-");
-    // printf( (fileStat.st_mode & S_IRGRP) ? "r" : "-");
-    // printf( (fileStat.st_mode & S_IWGRP) ? "w" : "-");
-    // printf( (fileStat.st_mode & S_IXGRP) ? "x" : "-");
-    // printf( (fileStat.st_mode & S_IROTH) ? "r" : "-");
-    // printf( (fileStat.st_mode & S_IWOTH) ? "w" : "-");
-    // printf( (fileStat.st_mode & S_IXOTH) ? "x" : "-");
-	// S_IFLNK
+
 void	findpermission_part2(long long permis, char **ret, char *dir)
 {
 	if (permis & S_IWGRP)
@@ -84,11 +73,8 @@ void	findsetpermission(t_ls *node, char *name)
 {
 	t_dir *cdir;
 
-	// cdir = node->dir;
 	(void)name;
 	cdir = findlast(node);
-	// while (cdir && ft_strcmp(name, cdir->dirnam))
-	// 	cdir = cdir->next;
 	setpermission(cdir);
 }
 

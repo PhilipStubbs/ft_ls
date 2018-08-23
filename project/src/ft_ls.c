@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:41:02 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 10:37:49 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 14:48:52 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,9 @@ void	ft_ls(t_ls *node)
 {
 	t_dir	*cdir;
 
-	savecurdir(node, ".");
-	// savecurdir(node, "src");
-	// savecurdir(node, "..");
-	// savecurdir(node, "libft");
-	
-	cdir = node->dir;
+	savecurdir(node, node->loc);
 
+	cdir = node->dir;
 	if (node->l)
 	{
 		while (cdir)
@@ -57,8 +53,11 @@ void	ft_ls(t_ls *node)
 	}
 	if (node->recv == 1)
 		recursivesearch(node);
-	if (node->recv == 0)
+	else
+	{
 		printdir(node ,node->dir);
+	}
+	
 	while (node->dir)
 	{
 		destroydir(node->dir);
