@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 17:02:26 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 09:46:23 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 10:10:05 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	movelinktostart(t_dir *dir, char *name)
 	files->next = newstart->next;
 	newstart->next = oldstart;
 	dir->files = newstart;
-	// return (dir->files);
 }
 
 void	movelinkbackbyone(t_dir *dir, char *name)
@@ -51,49 +50,43 @@ void	movelinkbackbyone(t_dir *dir, char *name)
 	tmp->next = newstart;
 }
 
-// void	birthsortfile(t_dir *tmp)
-// {
-// 	t_statinfo	*file;
-// 	int			lifes;
+void	birthsortfile(t_dir *tmp)
+{
+	t_statinfo	*file;
 
-// 	file = tmp->files;
-// 	lifes = 2;
-// 	while (lifes)
-// 	{
-// 		if (file->next != NULL && file->stinfo.st_birthtimespec.tv_sec >  file->next->stinfo.st_birthtimespec.tv_sec)
-// 		{
-// 			file = movelinktostart(tmp, file->next->name);
-// 		}
-// 		file = file->next;
-// 		if (file == NULL)
-// 		{
-// 			lifes--;
-// 			file = tmp->files;
-// 		}
-// 	}
-// }
+	file = tmp->files;
+	while (file)
+	{
+		if (file->next != NULL && file->stinfo.st_birthtimespec.tv_sec > file->next->stinfo.st_birthtimespec.tv_sec)
+		{
+			movelinkbackbyone(tmp, file->next->name);
+			file = tmp->files;
+		}
+		file = file->next;
+	}
+}
 
-// void	revbirthsortfile(t_dir *tmp)
-// {
-// 	t_statinfo	*file;
-// 	int			lifes;
+void	revbirthsortfile(t_dir *tmp)
+{
+	t_statinfo	*file;
+	int			lifes;
 
-// 	file = tmp->files;
-// 	lifes = 2;
-// 	while (lifes)
-// 	{
-// 		if (file->next != NULL && file->stinfo.st_birthtimespec.tv_sec < file->next->stinfo.st_birthtimespec.tv_sec)
-// 		{
-// 			file = movelinktostart(tmp, file->next->name);
-// 		}
-// 		file = file->next;
-// 		if (file == NULL)
-// 		{
-// 			lifes--;
-// 			file = tmp->files;
-// 		}
-// 	}
-// }
+	file = tmp->files;
+	lifes = 2;
+	while (lifes)
+	{
+		if (file->next != NULL && file->stinfo.st_birthtimespec.tv_sec < file->next->stinfo.st_birthtimespec.tv_sec)
+		{
+			movelinktostart(tmp, file->next->name);
+		}
+		file = file->next;
+		if (file == NULL)
+		{
+			lifes--;
+			file = tmp->files;
+		}
+	}
+}
 
 void	alphasortfile(t_dir *tmp)
 {
@@ -102,7 +95,7 @@ void	alphasortfile(t_dir *tmp)
 	file = tmp->files;
 	while (file)
 	{
-		if (file->next != NULL && stringcomp(file->name ,file->next->name) == 1)
+		if (file->next != NULL && stringcomp(file->name, file->next->name) == 1)
 		{
 			movelinkbackbyone(tmp, file->next->name);
 			file = tmp->files;
@@ -116,23 +109,23 @@ void	alphasortfile(t_dir *tmp)
 void	revalphasortfile(t_dir *tmp)
 {
 	t_statinfo	*file;
-	// int			lifes;
+	int			lifes;
 
 	file = tmp->files;
-	// lifes = 2;
-	while (file)
+	lifes = 2;
+	while (lifes)
 	{
-		if (file->next != NULL && stringcomp(file->name ,file->next->name) == 0)
+		if (file->next != NULL && stringcomp(file->name, file->next->name) == 0)
 		{
 			// ft_printf("changing [%s] | [%s]\n", file->name ,file->next->name);
 			movelinktostart(tmp, file->next->name);
 			file = tmp->files;
 		}
 		file = file->next;
-	// 	if (file == NULL)
-	// 	{
-	// 		lifes--;
-	// 		file = tmp->files;
-	// 	}
+		if (file == NULL)
+		{
+			lifes--;
+			file = tmp->files;
+		}
 	}
 }
