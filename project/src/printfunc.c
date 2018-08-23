@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 16:13:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 10:31:46 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 10:55:38 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,32 +18,10 @@ void	sortfile(t_ls *node, t_dir *tmp)
 {
 	// t_statinfo	*file;
 	(void)node;
-	revalphasortfile(tmp);
+	alphasortfile(tmp);
 }
 
-int		biggestsize(t_dir *dir)
-{
-	t_statinfo	*file;
-	long long	tmp;
-	int			tmpsize;
-	int			ret;
-
-	file = dir->files;
-	ret = 0;
-	while (file)
-	{
-		tmp = file->stinfo.st_size;
-		tmpsize = 1;
-		while (tmp /= 10)
-			tmpsize++;
-		if (tmpsize > ret)
-			ret = tmpsize;
-		file = file->next;
-	}
-	return (ret);
-}
-
-void	printfull(t_statinfo *file, int len)
+void	printfull(t_statinfo *file, int slen, int hlen)
 {
 	struct passwd	*users;
 	struct group	*grp;
@@ -54,8 +32,8 @@ void	printfull(t_statinfo *file, int len)
 	date = epochtostring(file->stinfo.st_birthtimespec.tv_sec);
 	users = getpwuid(file->stinfo.st_uid);
 	grp = getgrgid(file->stinfo.st_gid);
-	ft_printf("%s %s %s % *s %s", 
-	file->permis, users->pw_name, grp->gr_name, len ,size, date);
+	ft_printf("%s  % *lld %s %s % *s %s", 
+	file->permis, hlen ,file->stinfo.st_nlink, users->pw_name, grp->gr_name, slen ,size, date);
 	free(date);
 	free(size);
 
@@ -64,17 +42,20 @@ void	printfull(t_statinfo *file, int len)
 void	printdir(t_ls *node, t_dir *tmp)
 {
 	t_statinfo	*file;
-	int			len;
+	int			sizelen;
+	int			hardlinklen;
 
 	sortfile(node, tmp);
-	len = biggestsize(tmp) +1 ;
-	ft_printf("len [%d]\n", len);
-	ft_printf("%s\n", tmp->fulldir);
+	sizelen = biggestfilesize(tmp) + 1;
+	hardlinklen = biggesthardlinksize(tmp);
+	ft_printf("%s:\n", tmp->fulldir);
+	if (node->l == 1)
+		ft_printf("total %d:\n", totalblocksizes(tmp));
 	file = tmp->files;
 	while (file != NULL)
 	{
 		if (node->l)
-			printfull(file, len);
+			printfull(file, sizelen, hardlinklen);
 
 		if (S_ISDIR(file->stinfo.st_mode) == 1 && node->g == 1)
 			ft_printf("{CYN}%*c[%s]\n", 5, 0, file->name);

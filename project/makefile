@@ -3,7 +3,7 @@ NAME = ft_ls
 
 SRC = src/epochtostring.c src/ft_ls.c src/main_ft_ls.c src/savecurdir.c src/standardisedinitialised.c src/validflags.c \
 	src/setpermission.c src/dir_link_creation.c src/destroydir.c src/recursivesearch.c src/createdouble.c src/printfunc.c \
-	src/sortingalgo.c src/stringcomp.c\
+	src/sortingalgo.c src/stringcomp.c src/findbiggestsizes.c \
 
 OBJ = *.o
 

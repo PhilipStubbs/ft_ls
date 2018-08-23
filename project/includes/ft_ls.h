@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:31:00 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/22 17:27:06 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 10:54:39 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,11 @@ int					stringcomp(char *str1, char *str2);
 
 void				printtest(t_ls *node, t_dir *tmp);
 void				printdir(t_ls *node, t_dir *tmp);
+
 void				destroylast_dir(t_ls *node);
 t_dir				*findlast(t_ls *node);
+int					biggesthardlinksize(t_dir *dir);
+int					biggestfilesize(t_dir *dir);
+int					totalblocksizes(t_dir *dir);
 
 #endif
