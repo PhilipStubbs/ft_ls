@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:27:09 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 14:31:14 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 15:15:31 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ int		main(int arc, char **arv)
 	if (arc > 1)
 		error = validflags(node, arv +1);
 	if (error >= 0 && node->loc == NULL)
-		node->loc = ft_strdup(".");
+	{
+		node->loc = (char**)ft_memalloc(sizeof(char) * 2);
+		node->loc[0] = ft_strdup(".");
+		node->loc[1] = NULL;
+	}
 	
 	// ft_printf("l=[%d] a=[%d] r=[%d] t=[%d] g=[%d] R=[%d] g=[%d]\n", node->l,node->a,node->r,node->t,node->g,node->recv,node->g);
 	if (error >= 0)

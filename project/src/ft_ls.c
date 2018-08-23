@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:41:02 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 14:48:52 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 15:14:40 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,29 +39,34 @@ void	printtest(t_ls *node, t_dir *tmp)
 void	ft_ls(t_ls *node)
 {
 	t_dir	*cdir;
+	int		i;
 
-	savecurdir(node, node->loc);
-
-	cdir = node->dir;
-	if (node->l)
+	i = 0;
+	while (node->loc[i])
 	{
-		while (cdir)
+		savecurdir(node, node->loc[i]);
+		cdir = node->dir;
+		if (node->l)
 		{
-			setpermission(cdir);
-			cdir = cdir->next;
+			while (cdir)
+			{
+				setpermission(cdir);
+				cdir = cdir->next;
+			}
 		}
-	}
-	if (node->recv == 1)
-		recursivesearch(node);
-	else
-	{
-		printdir(node ,node->dir);
-	}
-	
-	while (node->dir)
-	{
-		destroydir(node->dir);
-		node->dir = node->dir->next;
+		if (node->recv == 1)
+			recursivesearch(node);
+		else
+		{
+			printdir(node ,node->dir);
+		}
+		
+		while (node->dir)
+		{
+			destroydir(node->dir);
+			node->dir = node->dir->next;
+		}
+		i++;
 	}
 }
 

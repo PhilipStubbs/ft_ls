@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:09:38 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 14:49:50 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 15:12:07 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,9 @@ int		isvalidflag(t_ls *node, char *arv)
 			i++;
 		}
 	}
-	if (arv[0] != '-' && node->loc == NULL)
-		node->loc = ft_strdup(arv);
-	else
-		return (-2);
+	if (arv[0] != '-')
+		return (2);
+		// node->loc = ft_strdup(arv);
 
 
 
@@ -75,6 +74,36 @@ int		isvalidflag(t_ls *node, char *arv)
 	return (1);
 }
 
+char	**createnewchardouble(char **old, char *adding)
+{
+	char	**list;
+	int		size;
+	int		i;
+
+	i = 0;
+	size = 1;
+	if (old == NULL)
+		list = (char**)ft_memalloc(sizeof(char *) * (size + 2));
+	else
+	{
+		size = ft_doublesize(old);
+		list = (char**)ft_memalloc(sizeof(char *) * (size + 2));
+		while (i <= size)
+		{
+			list[i] = ft_strdup(old[i]);
+			i++;
+			if (old[i] == NULL)
+				break ;
+		}
+	}
+	list[i] = ft_strdup(adding);
+	list[i + 1] = NULL;
+	if (old)
+		freedouble(old, size);
+	return (list);
+}
+
+
 int		validflags(t_ls *node, char **arv)
 {
 	int	l;
@@ -85,6 +114,10 @@ int		validflags(t_ls *node, char **arv)
 	while (arv[l])
 	{
 		ret = isvalidflag(node, arv[l]);
+		if (ret == 2)
+		{
+			node->loc = createnewchardouble(node->loc, arv[l]);
+		}
 		if (ret < 1)
 		{
 			if (ret == -2)

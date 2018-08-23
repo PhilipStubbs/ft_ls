@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:31:00 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 14:24:56 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 15:00:06 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef	struct		s_dir
 typedef	struct		s_ls
 {
 	t_dir			*dir;
-	char			*loc;
+	char			**loc;
 	int				l;
 	int				recv;
 	int				a;
