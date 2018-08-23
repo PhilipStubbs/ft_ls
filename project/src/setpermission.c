@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 16:21:51 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/22 11:25:53 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 13:31:20 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
     // printf( (fileStat.st_mode & S_IWOTH) ? "w" : "-");
     // printf( (fileStat.st_mode & S_IXOTH) ? "x" : "-");
 	// S_IFLNK
-void	findpermission_part2(long long permis, char **ret)
+void	findpermission_part2(long long permis, char **ret, char *dir)
 {
 	if (permis & S_IWGRP)
 		*ret = dynamicstring(ret, "w");
@@ -45,13 +45,13 @@ void	findpermission_part2(long long permis, char **ret)
 		*ret = dynamicstring(ret, "x");
 	else
 		*ret = dynamicstring(ret, "-");
-	// if (permis & S_IFLNK)
-	// *ret = dynamicchar(ret, '@');
-	// if (S_ISLNK(permis) == 1)
-		// *ret = dynamicchar(ret, '@');
+	if ((listxattr(dir, 0, 0, XATTR_NOFOLLOW)) > 0)
+		*ret = dynamicstring(ret, "@");
+	else
+		*ret = dynamicstring(ret, " ");
 }
 
-char	*findpermission(long long permis)
+char	*findpermission(long long permis, char *dir)
 {
 	char	*ret;
 
@@ -76,7 +76,7 @@ char	*findpermission(long long permis)
 		ret = dynamicstring(&ret, "r");
 	else
 		ret = dynamicstring(&ret, "-");
-	findpermission_part2(permis, &ret);
+	findpermission_part2(permis, &ret, dir);
 	return (ret);
 }
 
@@ -99,8 +99,10 @@ void	setpermission(t_dir *cdir)
 	tmp = cdir->files;
 	while (tmp != NULL)
 	{
+		if (S_ISLNK(tmp->stinfo.st_mode) == 1)
+			ft_printf("HERE [%s]\n", tmp->name);
 		if (tmp->permis == NULL)
-			tmp->permis = findpermission(tmp->stinfo.st_mode);
+			tmp->permis = findpermission(tmp->stinfo.st_mode, tmp->fulldir);
 		tmp = tmp->next;
 	}
 }

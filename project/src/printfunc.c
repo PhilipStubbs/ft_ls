@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 16:13:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 10:55:38 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 13:50:12 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,26 @@ void	printfull(t_statinfo *file, int slen, int hlen)
 	struct group	*grp;
 	char			*date;
 	char			*size;
+	char			*tmp;
 
 	size = ft_lltoa(file->stinfo.st_size);
-	date = epochtostring(file->stinfo.st_birthtimespec.tv_sec);
+	tmp = epochtostring(file->stinfo.st_mtimespec.tv_sec);
+	date = ft_strsub(tmp, 4, 12);
+	free(tmp);
 	users = getpwuid(file->stinfo.st_uid);
 	grp = getgrgid(file->stinfo.st_gid);
-	ft_printf("%s  % *lld %s %s % *s %s", 
+	ft_printf("%s % *lld %s  %s % *s %s", 
 	file->permis, hlen ,file->stinfo.st_nlink, users->pw_name, grp->gr_name, slen ,size, date);
 	free(date);
 	free(size);
+}
 
+int		execheck(char *p)
+{
+	if (p[3] == 'x' && p[6] == 'x' && p[9] == 'x')
+		return (1);
+	else
+		return (0);
 }
 
 void	printdir(t_ls *node, t_dir *tmp)
@@ -48,6 +58,7 @@ void	printdir(t_ls *node, t_dir *tmp)
 	sortfile(node, tmp);
 	sizelen = biggestfilesize(tmp) + 1;
 	hardlinklen = biggesthardlinksize(tmp);
+	if (ft_strcmp(tmp->dirnam, node->dir->dirnam) != 0)
 	ft_printf("%s:\n", tmp->fulldir);
 	if (node->l == 1)
 		ft_printf("total %d:\n", totalblocksizes(tmp));
@@ -56,12 +67,12 @@ void	printdir(t_ls *node, t_dir *tmp)
 	{
 		if (node->l)
 			printfull(file, sizelen, hardlinklen);
-
 		if (S_ISDIR(file->stinfo.st_mode) == 1 && node->g == 1)
-			ft_printf("{CYN}%*c[%s]\n", 5, 0, file->name);
+			ft_printf("{CYN} %s\n", file->name);
+		else if (execheck(file->permis) == 1 && node->g == 1)
+			ft_printf("{MAG} %s\n", file->name);
 		else
-			ft_printf("%*c[%s]\n", 5, 0, file->name);
-			// ft_printf("	[%s]\n",epochtostring(file->stinfo.s);
+			ft_printf(" %s\n", file->name);
 		file = file->next;
 	}
 	ft_printf("\n");

@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:31:00 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 10:54:39 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 13:24:23 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/xattr.h>
 # include <dirent.h>
 # include <time.h>
 # include "ft_printf.h"
+
 
 typedef	struct		s_info
 {
