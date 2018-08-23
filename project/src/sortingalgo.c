@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 17:02:26 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 16:46:25 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 18:23:56 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,88 @@ void	movelinkbackbyone(t_dir *dir, char *name)
 	tmp->next = newstart;
 }
 
+int		filecount(t_dir *dir)
+{
+	t_statinfo	*tmp;
+	int			i;
+
+	i = 0;
+	tmp = dir->files;
+
+	while (tmp)
+	{
+		// ft_printf("[%s]\n", tmp->name);
+		tmp = tmp->next;
+		i++;
+	}
+	ft_printf("size[%d]\n", i);
+	return (i);
+}
+
+
+
+void	movelinkbackbyoneTEST(t_dir *dir, t_statinfo *a, t_statinfo *b,  t_statinfo *c)
+{
+
+	t_statinfo	*head;
+	// int			size;
+
+	// size = filecount(dir);
+	head = dir->files;
+	if (ft_strcmp(a->name, b->name) != 0)
+		a->next = c;
+	b->next = b->next->next;
+	c->next = b;
+	dir->files = head;
+}
+
+t_statinfo	*movelinkbackbyoneTEST2(t_dir *dir, char *name)
+{
+	t_statinfo	*newstart;
+	t_statinfo	*files;
+	t_statinfo	*tmp;
+	t_statinfo	*head;
+
+	newstart = dir->files;
+	files = dir->files;
+	tmp = dir->files;
+	head = dir->files;
+	while (newstart && ft_strcmp(newstart->name, name) != 0)
+		newstart = newstart->next;
+	while (files && ft_strcmp(files->next->name, name) != 0)
+		files = files->next;
+	if (ft_strcmp(tmp->name, files->name) != 0)
+	{
+		while (tmp && ft_strcmp(tmp->next->name, files->name) != 0)
+			tmp = tmp->next;
+		tmp->next = newstart;
+	}
+	files->next = newstart->next;
+	newstart->next = files;
+	return (head);
+}
+
+
 void	birthsortfile(t_dir *tmp)
 {
 	t_statinfo	*file;
+	// t_statinfo	*a;
 
 	file = tmp->files;
 	while (file)
 	{
 		if (file->next != NULL && file->stinfo.st_mtimespec.tv_sec < file->next->stinfo.st_mtimespec.tv_sec)
 		{
-			movelinktostart(tmp, file->next->name);
-			file = tmp->files;
+			file = movelinkbackbyoneTEST2(tmp, file->next->name);
+			// file = tmp->files;
+			// a = tmp->files;
+			// if (ft_strcmp(a->name, file->name) != 0)
+			// {
+			// 	while (ft_strcmp(a->next->name, file->name) != 0)
+			// 		a = a->next;
+			// }
+			// movelinkbackbyoneTEST(tmp, a ,file , file->next);
+			// file = tmp->files;
 		}
 		else
 			file = file->next;
@@ -76,10 +147,10 @@ void	revbirthsortfile(t_dir *tmp)
 	lifes = 3;
 	while (file)
 	{
-		if (file->next != NULL && file->stinfo.st_mtimespec.tv_sec >file->next->stinfo.st_mtimespec.tv_sec)
+		if (file->next != NULL && file->stinfo.st_mtimespec.tv_sec >file-> next->stinfo.st_mtimespec.tv_sec)
 		{
-			movelinktostart(tmp, file->next->name);
-			file = tmp->files;
+			file = movelinkbackbyoneTEST2(tmp, file->next->name);
+			// file = tmp->files;
 		}
 		else
 			file = file->next;

@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:41:02 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 15:14:40 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 16:51:01 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	ft_ls(t_ls *node)
 			destroydir(node->dir);
 			node->dir = node->dir->next;
 		}
+		
 		i++;
 	}
 }
