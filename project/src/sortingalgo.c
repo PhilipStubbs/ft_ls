@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 17:02:26 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 10:10:05 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 16:46:25 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,13 @@ void	birthsortfile(t_dir *tmp)
 	file = tmp->files;
 	while (file)
 	{
-		if (file->next != NULL && file->stinfo.st_birthtimespec.tv_sec > file->next->stinfo.st_birthtimespec.tv_sec)
+		if (file->next != NULL && file->stinfo.st_mtimespec.tv_sec < file->next->stinfo.st_mtimespec.tv_sec)
 		{
-			movelinkbackbyone(tmp, file->next->name);
+			movelinktostart(tmp, file->next->name);
 			file = tmp->files;
 		}
-		file = file->next;
+		else
+			file = file->next;
 	}
 }
 
@@ -72,19 +73,16 @@ void	revbirthsortfile(t_dir *tmp)
 	int			lifes;
 
 	file = tmp->files;
-	lifes = 2;
-	while (lifes)
+	lifes = 3;
+	while (file)
 	{
-		if (file->next != NULL && file->stinfo.st_birthtimespec.tv_sec < file->next->stinfo.st_birthtimespec.tv_sec)
+		if (file->next != NULL && file->stinfo.st_mtimespec.tv_sec >file->next->stinfo.st_mtimespec.tv_sec)
 		{
 			movelinktostart(tmp, file->next->name);
-		}
-		file = file->next;
-		if (file == NULL)
-		{
-			lifes--;
 			file = tmp->files;
 		}
+		else
+			file = file->next;
 	}
 }
 
@@ -100,32 +98,64 @@ void	alphasortfile(t_dir *tmp)
 			movelinkbackbyone(tmp, file->next->name);
 			file = tmp->files;
 		}
-		file = file->next;
+		else
+			file = file->next;
 	}
 }
-
-
 
 void	revalphasortfile(t_dir *tmp)
 {
 	t_statinfo	*file;
-	int			lifes;
 
 	file = tmp->files;
-	lifes = 2;
-	while (lifes)
+	while (file)
 	{
 		if (file->next != NULL && stringcomp(file->name, file->next->name) == 0)
 		{
-			// ft_printf("changing [%s] | [%s]\n", file->name ,file->next->name);
 			movelinktostart(tmp, file->next->name);
 			file = tmp->files;
 		}
-		file = file->next;
-		if (file == NULL)
-		{
-			lifes--;
-			file = tmp->files;
-		}
+		else
+			file = file->next;
 	}
 }
+
+void	sizesortfile(t_dir *tmp)
+{
+	t_statinfo	*file;
+
+	file = tmp->files;
+	while (file)
+	{
+		if (file->next != NULL && file->stinfo.st_size < file->next->stinfo.st_size)
+		{
+			movelinktostart(tmp, file->next->name);
+			file = tmp->files;
+		}
+		else
+			file = file->next;
+	}
+}
+
+void	revsizesortfile(t_dir *tmp)
+{
+	t_statinfo	*file;
+
+	file = tmp->files;
+	while (file)
+	{
+		if (file->next != NULL && file->stinfo.st_size > file->next->stinfo.st_size)
+		{
+			movelinktostart(tmp, file->next->name);
+			file = tmp->files;
+		}
+		else
+			file = file->next;
+	}
+}
+
+		// if (file == NULL)
+		// {
+		// 	lifes--;
+		// 	file = tmp->files;
+		// }

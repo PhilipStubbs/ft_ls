@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:09:38 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 15:12:07 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 16:04:53 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	feedintonode(t_ls *node, char *arv, int i)
 		node->recv = 1;
 	if (arv[i] == 'G')
 		node->g = 1;
+	if (arv[i] == 's')
+		node->s = 1;
 }
 
 int		isvalidflag(t_ls *node, char *arv)

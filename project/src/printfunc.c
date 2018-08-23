@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 16:13:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 14:47:33 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 16:36:15 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,21 @@
 void	sortfile(t_ls *node, t_dir *tmp)
 {
 	// t_statinfo	*file;
-	(void)node;
+
 	// if (node->a == 0)
-	alphasortfile(tmp);
+		
+	if (node->r == 1 && node->t == 0 && node->s == 0)
+		revalphasortfile(tmp);
+	else if (node->r == 0 && node->t == 1 && node->s == 0)
+		birthsortfile(tmp);
+	else if (node->r == 1 && node->t == 1 && node->s == 0)
+		revbirthsortfile(tmp);
+	else if (node->s == 1 && node->r == 0)
+		sizesortfile(tmp);
+	else if (node->s == 1 && node->r == 1)
+		revsizesortfile(tmp);
+	else
+		alphasortfile(tmp);
 }
 
 void	printfull(t_statinfo *file, int slen, int hlen)

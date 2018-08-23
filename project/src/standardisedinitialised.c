@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 08:18:09 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 14:17:55 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 16:04:28 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_ls	*standardisedinitialised(void)
 	ret->r = 0;
 	ret->t = 0;
 	ret->g = 0;
+	ret->s = 0;
 	ret->loc = NULL;
 	return (ret);
 }

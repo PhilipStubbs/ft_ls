@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:31:00 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 15:00:06 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/23 16:06:30 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef	struct		s_ls
 	int				r;
 	int				t;
 	int				g;
+	int				s;
 }					t_ls;
 
 t_ls				*standardisedinitialised(void);
@@ -75,6 +76,8 @@ void				revalphasortfile(t_dir *tmp);
 void				birthsortfile(t_dir *tmp);
 void				revbirthsortfile(t_dir *tmp);
 int					stringcomp(char *str1, char *str2);
+void				sizesortfile(t_dir *tmp);
+void				revsizesortfile(t_dir *tmp);
 
 void				printtest(t_ls *node, t_dir *tmp);
 void				printdir(t_ls *node, t_dir *tmp);
