@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:31:00 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 15:51:39 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 17:05:15 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ typedef	struct		s_info
 	char			*fulldir;
 	char			*date;
 	char			*permis;
+	int				urslen;
+	int				grplen;
 	struct stat		stinfo;
 	struct s_info	*next;
 }					t_statinfo;
@@ -81,6 +83,7 @@ void				revbirthsortfile(t_dir *tmp);
 int					stringcomp(char *str1, char *str2);
 void				sizesortfile(t_dir *tmp);
 void				revsizesortfile(t_dir *tmp);
+int					ft_lllen(long long i);
 
 void				printtest(t_ls *node, t_dir *tmp);
 void				printdir(t_ls *node, t_dir *tmp);
@@ -92,5 +95,7 @@ int					biggestfilesize(t_dir *dir);
 int					totalblocksizes(t_dir *dir);
 int					numberofdirs(t_dir *cdir);
 int					filecount(t_dir *dir);
+void				setusergrplen(t_dir *dir);
+
 
 #endif

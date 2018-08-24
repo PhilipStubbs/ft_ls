@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 16:13:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 17:46:06 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 18:17:45 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ void	spcfileprint(t_ls *node, t_dir *dir, int sizelen, int hardlinklen)
 	}
 	infoprint(node, dir);
 	theprinting(node, file, sizelen, hardlinklen);
+	free(node->spcfile);
+	node->spcfile = NULL;
 }
 
 void	printdir(t_ls *node, t_dir *tmp)

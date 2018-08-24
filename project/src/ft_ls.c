@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:41:02 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 16:39:54 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 18:26:40 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,9 @@ void	ft_ls(t_ls *node)
 	{
 		node->inx = i;
 		if (validdircheck(node, i) == 0)
+		{
 			return ;
+		}
 		savecurdir(node, node->loc[i]);
 		cdir = node->dir;
 		if (node->l)
@@ -122,8 +124,8 @@ void	ft_ls(t_ls *node)
 			destroydir(node->dir);
 			node->dir = node->dir->next;
 		}
-		if (node->spcfile != NULL)
-			free(node->spcfile);
+		// if (node->spcfile != NULL)
+		// 	free(node->spcfile);
 		i++;
 	}
 }
