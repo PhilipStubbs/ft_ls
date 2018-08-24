@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 17:02:26 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 18:23:56 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 09:29:54 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,35 @@ t_statinfo	*movelinkbackbyoneTEST2(t_dir *dir, char *name)
 	return (head);
 }
 
+void	movelinkbackbyoneTEST3(t_dir *dir, t_statinfo *b, t_statinfo *c)
+{
+	t_statinfo	*a;
+	t_statinfo	*tmpb;
+	t_statinfo	*tmpc;
+	int			flag;
+
+	a = dir->files;
+	tmpb = b;
+	tmpc = c;
+	flag = 0;
+	if (ft_strcmp(a->name, b->name) != 0)
+	{
+		flag = 1;
+		while (ft_strcmp(a->next->name, b->name) != 0)
+			a = a->next;
+	}
+	if (flag == 1)
+	{
+		a->next = tmpc;
+	}
+	else
+	{
+		dir->files = tmpc;
+	}
+	tmpb->next = tmpc->next;
+	tmpc->next = tmpb;
+}
+
 
 void	birthsortfile(t_dir *tmp)
 {
@@ -122,16 +151,8 @@ void	birthsortfile(t_dir *tmp)
 	{
 		if (file->next != NULL && file->stinfo.st_mtimespec.tv_sec < file->next->stinfo.st_mtimespec.tv_sec)
 		{
-			file = movelinkbackbyoneTEST2(tmp, file->next->name);
-			// file = tmp->files;
-			// a = tmp->files;
-			// if (ft_strcmp(a->name, file->name) != 0)
-			// {
-			// 	while (ft_strcmp(a->next->name, file->name) != 0)
-			// 		a = a->next;
-			// }
-			// movelinkbackbyoneTEST(tmp, a ,file , file->next);
-			// file = tmp->files;
+			movelinkbackbyoneTEST3(tmp, file, file->next);
+			file = tmp->files;
 		}
 		else
 			file = file->next;
@@ -147,10 +168,10 @@ void	revbirthsortfile(t_dir *tmp)
 	lifes = 3;
 	while (file)
 	{
-		if (file->next != NULL && file->stinfo.st_mtimespec.tv_sec >file-> next->stinfo.st_mtimespec.tv_sec)
+		if (file->next != NULL && file->stinfo.st_mtimespec.tv_sec > file->next->stinfo.st_mtimespec.tv_sec)
 		{
-			file = movelinkbackbyoneTEST2(tmp, file->next->name);
-			// file = tmp->files;
+			movelinkbackbyoneTEST3(tmp, file, file->next);
+			file = tmp->files;
 		}
 		else
 			file = file->next;
