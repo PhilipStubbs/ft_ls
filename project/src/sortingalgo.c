@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 17:02:26 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 09:29:54 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 09:49:18 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	movelinktostart(t_dir *dir, char *name)
 	dir->files = newstart;
 }
 
-void	movelinkbackbyone(t_dir *dir, char *name)
+void	movelinkbackbyoneLEG(t_dir *dir, char *name)
 {
 	t_statinfo	*newstart;
 	t_statinfo	*files;
@@ -60,7 +60,6 @@ int		filecount(t_dir *dir)
 
 	while (tmp)
 	{
-		// ft_printf("[%s]\n", tmp->name);
 		tmp = tmp->next;
 		i++;
 	}
@@ -69,49 +68,7 @@ int		filecount(t_dir *dir)
 }
 
 
-
-void	movelinkbackbyoneTEST(t_dir *dir, t_statinfo *a, t_statinfo *b,  t_statinfo *c)
-{
-
-	t_statinfo	*head;
-	// int			size;
-
-	// size = filecount(dir);
-	head = dir->files;
-	if (ft_strcmp(a->name, b->name) != 0)
-		a->next = c;
-	b->next = b->next->next;
-	c->next = b;
-	dir->files = head;
-}
-
-t_statinfo	*movelinkbackbyoneTEST2(t_dir *dir, char *name)
-{
-	t_statinfo	*newstart;
-	t_statinfo	*files;
-	t_statinfo	*tmp;
-	t_statinfo	*head;
-
-	newstart = dir->files;
-	files = dir->files;
-	tmp = dir->files;
-	head = dir->files;
-	while (newstart && ft_strcmp(newstart->name, name) != 0)
-		newstart = newstart->next;
-	while (files && ft_strcmp(files->next->name, name) != 0)
-		files = files->next;
-	if (ft_strcmp(tmp->name, files->name) != 0)
-	{
-		while (tmp && ft_strcmp(tmp->next->name, files->name) != 0)
-			tmp = tmp->next;
-		tmp->next = newstart;
-	}
-	files->next = newstart->next;
-	newstart->next = files;
-	return (head);
-}
-
-void	movelinkbackbyoneTEST3(t_dir *dir, t_statinfo *b, t_statinfo *c)
+void	movelinkbackbyone(t_dir *dir, t_statinfo *b, t_statinfo *c)
 {
 	t_statinfo	*a;
 	t_statinfo	*tmpb;
@@ -129,13 +86,9 @@ void	movelinkbackbyoneTEST3(t_dir *dir, t_statinfo *b, t_statinfo *c)
 			a = a->next;
 	}
 	if (flag == 1)
-	{
 		a->next = tmpc;
-	}
 	else
-	{
 		dir->files = tmpc;
-	}
 	tmpb->next = tmpc->next;
 	tmpc->next = tmpb;
 }
@@ -144,14 +97,13 @@ void	movelinkbackbyoneTEST3(t_dir *dir, t_statinfo *b, t_statinfo *c)
 void	birthsortfile(t_dir *tmp)
 {
 	t_statinfo	*file;
-	// t_statinfo	*a;
 
 	file = tmp->files;
 	while (file)
 	{
 		if (file->next != NULL && file->stinfo.st_mtimespec.tv_sec < file->next->stinfo.st_mtimespec.tv_sec)
 		{
-			movelinkbackbyoneTEST3(tmp, file, file->next);
+			movelinkbackbyone(tmp, file, file->next);
 			file = tmp->files;
 		}
 		else
@@ -170,7 +122,7 @@ void	revbirthsortfile(t_dir *tmp)
 	{
 		if (file->next != NULL && file->stinfo.st_mtimespec.tv_sec > file->next->stinfo.st_mtimespec.tv_sec)
 		{
-			movelinkbackbyoneTEST3(tmp, file, file->next);
+			movelinkbackbyone(tmp, file, file->next);
 			file = tmp->files;
 		}
 		else
@@ -187,7 +139,7 @@ void	alphasortfile(t_dir *tmp)
 	{
 		if (file->next != NULL && stringcomp(file->name, file->next->name) == 1)
 		{
-			movelinkbackbyone(tmp, file->next->name);
+			movelinkbackbyone(tmp, file, file->next);
 			file = tmp->files;
 		}
 		else
@@ -204,7 +156,7 @@ void	revalphasortfile(t_dir *tmp)
 	{
 		if (file->next != NULL && stringcomp(file->name, file->next->name) == 0)
 		{
-			movelinktostart(tmp, file->next->name);
+			movelinkbackbyone(tmp, file, file->next);
 			file = tmp->files;
 		}
 		else
@@ -221,7 +173,7 @@ void	sizesortfile(t_dir *tmp)
 	{
 		if (file->next != NULL && file->stinfo.st_size < file->next->stinfo.st_size)
 		{
-			movelinktostart(tmp, file->next->name);
+			movelinkbackbyone(tmp, file, file->next);
 			file = tmp->files;
 		}
 		else
@@ -238,7 +190,7 @@ void	revsizesortfile(t_dir *tmp)
 	{
 		if (file->next != NULL && file->stinfo.st_size > file->next->stinfo.st_size)
 		{
-			movelinktostart(tmp, file->next->name);
+			movelinkbackbyone(tmp, file, file->next);
 			file = tmp->files;
 		}
 		else
