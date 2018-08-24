@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:41:02 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 15:42:26 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 15:55:56 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,27 @@ int		slashcheck(t_ls *node, int i)
 	return (count);
 }
 
+int		dircheck(t_ls *node, int i)
+{
+	DIR				*currentdir;
+
+	currentdir = opendir(node->loc[i]);
+	if (currentdir == NULL)
+	{
+		closedir(currentdir);
+		return (0);
+	}
+	closedir(currentdir);
+	return (1);
+}
+
 int		validfilecheck(t_ls *node, int i)
 {
 	char	*tmp;
 	char	*dir;
 	int		x;
 
-	if (slashcheck(node, i) == 0)
+	if (slashcheck(node, i) == 0 || dircheck(node, i) == 1)
 		return (0);
 	x = ft_strlen(node->loc[i]);
 	while (node->loc[i][x] != '/')
@@ -86,6 +100,7 @@ int		validdircheck(t_ls *node, int i)
 	if (currentdir == NULL)
 	{
 		ft_printf("{RED}ft_ls: [%s]: No such file or directory", node->loc[i]);
+		closedir(currentdir);
 		return (0);
 	}
 	closedir(currentdir);
@@ -100,6 +115,7 @@ void	ft_ls(t_ls *node)
 	i = 0;
 	while (node->loc[i])
 	{
+		node->inx = i;
 		if (validdircheck(node, i) == 0)
 			return ;
 		savecurdir(node, node->loc[i]);

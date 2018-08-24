@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:31:00 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 14:38:14 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 15:51:39 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef	struct		s_ls
 	t_dir			*dir;
 	char			**loc;
 	char			*spcfile;
+	int				inx;
 	int				dflt;
 	int				l;
 	int				recv;

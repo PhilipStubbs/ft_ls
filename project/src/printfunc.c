@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 16:13:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 15:42:43 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 15:53:22 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,31 @@ void	theprinting(t_ls *node, t_statinfo *file, int sizelen, int hardlinklen)
 		ft_printf("%s\n", file->name);
 }
 
-// void	spcfileprint(t_ls *node, t_dir *dir, int sizelen, int hardlinklen)
-// {
-// 	t_statinfo	*file;
+void	infoprint(t_ls *node, t_dir *tmp)
+{
+	if (ft_strcmp(tmp->dirnam, node->dir->dirnam) != 0)
+		ft_printf("%s:\n", tmp->fulldir);
+	if (node->l == 1)
+		ft_printf("total %d:\n", totalblocksizes(tmp));
+}
 
-// 	file = dir->files;
 
-// 	while (file && ft_strcmp(file->name , node->spcfile) != 0)
-// 		file = file->next;
-// 	if (file == NULL)
-// 		ft_printf("{RED}ft_ls: %s%s: No such file or directory", node->loc);
-// }
+void	spcfileprint(t_ls *node, t_dir *dir, int sizelen, int hardlinklen)
+{
+	t_statinfo	*file;
+
+	file = dir->files;
+
+	while (file && ft_strcmp(file->name , node->spcfile) != 0)
+		file = file->next;
+	if (file == NULL && ft_strcmp(dir->fulldir, node->loc[node->inx]) == 0)
+	{
+		ft_printf("{RED}ft_ls: %s: No such file or directory", node->spcfile);
+		return ;
+	}
+	infoprint(node, dir);
+	theprinting(node, file, sizelen, hardlinklen);
+}
 
 void	printdir(t_ls *node, t_dir *tmp)
 {
@@ -102,15 +116,12 @@ void	printdir(t_ls *node, t_dir *tmp)
 		return ;
 	sizelen = biggestfilesize(tmp) + 1;
 	hardlinklen = biggesthardlinksize(tmp);
-	// if (node->spcfile)
-	// {
-	// 	spcfileprint(node, tmp, sizelen, hardlinklen);
-	// 	return ;
-	// }
-	if (ft_strcmp(tmp->dirnam, node->dir->dirnam) != 0)
-		ft_printf("%s:\n", tmp->fulldir);
-	if (node->l == 1)
-		ft_printf("total %d:\n", totalblocksizes(tmp));
+	if (node->spcfile)
+	{
+		spcfileprint(node, tmp, sizelen, hardlinklen);
+		return ;
+	}
+	infoprint(node, tmp);
 	file = tmp->files;
 	while (file != NULL)
 	{
