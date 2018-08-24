@@ -6,12 +6,30 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 16:17:35 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/22 13:16:41 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 12:00:02 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
+int		recalibrate(t_dir *dir)
+{
+	t_statinfo	*file;
+	int			i;
+
+	file = dir->files;
+	i = 0;
+	while (file)
+	{
+		if (file && ft_strncmp(file->name, ".", 1) == 0)
+		{
+			dir->comp = createnewdouble(dir, file->name);
+			i++;
+		}
+		file = file->next;
+	}
+	return (i);
+}
 
 char	*finddirs(t_ls *node)
 {
@@ -27,7 +45,8 @@ char	*finddirs(t_ls *node)
 	file = tmpdir->files;
 	ret = NULL;
 	max = ft_doublesize(tmpdir->comp);
-
+	if (node->a == 0)
+		recalibrate(tmpdir);
 	while (file)
 	{
 		if (S_ISDIR(file->stinfo.st_mode) == 1) //&& ft_strncmp(file->name, "." , 1) != 0)
@@ -56,15 +75,15 @@ char	*finddirs(t_ls *node)
 	return (ret);
 }
 
-t_dir	*finddir(t_ls *node, char *name)
-{
-	t_dir *cdir;
+// t_dir	*finddir(t_ls *node, char *name)
+// {
+// 	t_dir *cdir;
 
-	cdir = node->dir;
-	while (cdir->next && ft_strcmp(name, cdir->dirnam))
-		cdir = cdir->next;
-	return (cdir);
-}
+// 	cdir = node->dir;
+// 	while (cdir->next && ft_strcmp(name, cdir->dirnam))
+// 		cdir = cdir->next;
+// 	return (cdir);
+// }
 
 t_dir	*findlast(t_ls *node)
 {
@@ -103,7 +122,12 @@ void	recursivesearch(t_ls *node)
 
 	printdir(node, node->dir);
 	i = 0;
-	maxbasedir = numberofdirs(node->dir);
+	if (node->a == 0)
+	{
+		recalibrate(node->dir);
+		i = 1;
+	}
+	maxbasedir = (numberofdirs(node->dir));
 	while (i < maxbasedir)
 	{
 		nextdir = finddirs(node);
@@ -116,10 +140,7 @@ void	recursivesearch(t_ls *node)
 			free(nextdir);
 		}
 		else if (nextdir == NULL)
-		{
-			// ft_printf("[%s]\n",NULL);
 			destroylast_dir(node);
-		}
 		cdir = findlast(node);
 		if (ft_strcmp(cdir->dirnam, node->dir->dirnam) == 0)
 			i++;

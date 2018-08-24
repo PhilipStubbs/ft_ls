@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:27:09 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 15:15:31 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 10:23:03 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 
 void	destroy(int error, t_ls *node)
 {
-	
 	(void)error;
 	// if (node->dir)
 	// 	free(node->dir);
-	free(node->loc);
+	// free(node->loc);
+	if (node->loc)
+		freedouble(node->loc, ft_doublesize(node->loc));
 	free(node);
 
 }

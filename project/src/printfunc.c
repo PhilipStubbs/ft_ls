@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 16:13:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 16:36:15 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 11:30:27 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,26 @@ void	printfull(t_statinfo *file, int slen, int hlen)
 	free(size);
 }
 
-int		execheck(char *p)
+int		execheck(long long permis)
 {
-	if (p != NULL)
-	{
-		if (p[3] == 'x' && p[6] == 'x' && p[9] == 'x')
-			return (1);
-		else
-			return
-				(0);
-	}
+
+
+	if ((permis & S_IXGRP || permis & S_IXUSR || permis & S_IXOTH) && S_ISDIR(permis) == 0)
+		return (1);
 	else
 		return (0);
+
+
+
+	// if (p != NULL)
+	// {
+	// 	if (p[3] == 'x' && p[6] == 'x' && p[9] == 'x')
+	// 		return (1);
+	// 	else
+	// 		return (0);
+	// }
+	// else
+	// 	return (0);
 }
 
 void	printdir(t_ls *node, t_dir *tmp)
@@ -72,31 +80,31 @@ void	printdir(t_ls *node, t_dir *tmp)
 	int			sizelen;
 	int			hardlinklen;
 
-
 	sortfile(node, tmp);
-	
 	sizelen = biggestfilesize(tmp) + 1;
 	hardlinklen = biggesthardlinksize(tmp);
 	if (ft_strcmp(tmp->dirnam, node->dir->dirnam) != 0)
 	ft_printf("%s:\n", tmp->fulldir);
-	
 	if (node->l == 1)
 		ft_printf("total %d:\n", totalblocksizes(tmp));
 	file = tmp->files;
 	while (file != NULL)
 	{
+		if (node->a == 0)
+		{
+			while (file && file->name[0] == '.')
+				file = file->next;
+		}
+		if (file == NULL)
+			break ;
 		if (node->l)
 			printfull(file, sizelen, hardlinklen);
 		if (S_ISDIR(file->stinfo.st_mode) == 1 && node->g == 1)
 			ft_printf("{CYN}%s\n", file->name);
-		else if (execheck(file->permis) == 1 && node->g == 1)
-		{
+		else if (execheck(file->stinfo.st_mode) == 1 && node->g == 1)
 			ft_printf("{MAG}%s\n", file->name);
-		}
 		else
-		{
 			ft_printf("%s\n", file->name);
-		}
 		file = file->next;
 	}
 	ft_printf("\n");
