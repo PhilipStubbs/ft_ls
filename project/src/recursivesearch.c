@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 16:17:35 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 12:00:02 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 12:29:47 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		recalibrate(t_dir *dir)
 	return (i);
 }
 
-char	*finddirs(t_ls *node)
+char	*findbestdirs(t_ls *node)
 {
 	t_dir		*tmpdir;
 	t_statinfo	*file;
@@ -49,7 +49,7 @@ char	*finddirs(t_ls *node)
 		recalibrate(tmpdir);
 	while (file)
 	{
-		if (S_ISDIR(file->stinfo.st_mode) == 1) //&& ft_strncmp(file->name, "." , 1) != 0)
+		if (S_ISDIR(file->stinfo.st_mode) == 1)
 		{
 			i = 0;
 			while (tmpdir->comp[i] != NULL)
@@ -75,16 +75,6 @@ char	*finddirs(t_ls *node)
 	return (ret);
 }
 
-// t_dir	*finddir(t_ls *node, char *name)
-// {
-// 	t_dir *cdir;
-
-// 	cdir = node->dir;
-// 	while (cdir->next && ft_strcmp(name, cdir->dirnam))
-// 		cdir = cdir->next;
-// 	return (cdir);
-// }
-
 t_dir	*findlast(t_ls *node)
 {
 	t_dir *cdir;
@@ -98,7 +88,7 @@ t_dir	*findlast(t_ls *node)
 int		numberofdirs(t_dir *cdir)
 {
 	t_statinfo	*file;
-	int	count;
+	int			count;
 
 	count = 0;
 	file = cdir->files;
@@ -113,6 +103,18 @@ int		numberofdirs(t_dir *cdir)
 	return (count);
 }
 
+void	recursivesearchpreprocess(t_ls *node, int *maxbasedir, int *i)
+{
+	printdir(node, node->dir);
+	*i = 0;
+	if (node->a == 0)
+	{
+		recalibrate(node->dir);
+		*i = 1;
+	}
+	*maxbasedir = (numberofdirs(node->dir));
+}
+
 void	recursivesearch(t_ls *node)
 {
 	char	*nextdir;
@@ -120,17 +122,10 @@ void	recursivesearch(t_ls *node)
 	int		i;
 	int		maxbasedir;
 
-	printdir(node, node->dir);
-	i = 0;
-	if (node->a == 0)
-	{
-		recalibrate(node->dir);
-		i = 1;
-	}
-	maxbasedir = (numberofdirs(node->dir));
+	recursivesearchpreprocess(node, &maxbasedir, &i);
 	while (i < maxbasedir)
 	{
-		nextdir = finddirs(node);
+		nextdir = findbestdirs(node);
 		if (nextdir != NULL)
 		{
 			savecurdir(node, nextdir);
@@ -146,7 +141,3 @@ void	recursivesearch(t_ls *node)
 			i++;
 	}
 }
-
-// ./ Filler_Visualizer-master/ visualizer/ frameworks/ SDL2_image.framework/ Frameworks /webp.framework/ Headers 7
-// ./ Algo 1/ Filler_Visualizer-master/ visualizer/ frameworks/ SDL2.framework/ Versions 6
-// ./ Completed Projects/ Algo 1/ filler/ .git/ objects/ ea  6
