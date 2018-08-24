@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:41:02 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 18:26:40 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 18:32:45 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	ft_ls(t_ls *node)
 	i = 0;
 	while (node->loc[i])
 	{
+		node->dflt = 0;
 		node->inx = i;
 		if (validdircheck(node, i) == 0)
 		{
