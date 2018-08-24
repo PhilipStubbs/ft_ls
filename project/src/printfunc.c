@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 16:13:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 17:17:55 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 17:46:06 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,13 @@ void	theprinting(t_ls *node, t_statinfo *file, int sizelen, int hardlinklen)
 {
 	if (node->l)
 		printfull(file, sizelen, hardlinklen);
+
+	if (S_ISDIR(file->stinfo.st_mode) == 1 && node->g == 1 && node->spcfile)
+		ft_printf("{CYN}%s/", node->loc[node->inx]);
+	else if (execheck(file->stinfo.st_mode) == 1 && node->g == 1  && node->spcfile)
+		ft_printf("{MAG}%s/", node->loc[node->inx]);
+	else if (node->spcfile)
+		ft_printf("%s/", node->loc[node->inx]);
 	if (S_ISDIR(file->stinfo.st_mode) == 1 && node->g == 1)
 		ft_printf("{CYN}%s\n", file->name);
 	else if (execheck(file->stinfo.st_mode) == 1 && node->g == 1)
@@ -85,7 +92,9 @@ void	infoprint(t_ls *node, t_dir *tmp)
 {
 	if (ft_strcmp(tmp->dirnam, node->dir->dirnam) != 0)
 		ft_printf("%s:\n", tmp->fulldir);
-	if (node->l == 1)
+	if (node->a == 0 && filecount(tmp) <= 2)
+		return ;
+	if (node->l == 1 && node->spcfile == NULL)
 		ft_printf("total %d:\n", totalblocksizes(tmp));
 }
 
@@ -115,8 +124,6 @@ void	printdir(t_ls *node, t_dir *tmp)
 	int			hardlinklen;
 
 	sortfile(node, tmp);
-	if (node->a == 0 && filecount(tmp) <= 2)
-		return ;
 	sizelen = biggestfilesize(tmp) + 1;
 	hardlinklen = biggesthardlinksize(tmp);
 	if (node->spcfile)
@@ -125,6 +132,8 @@ void	printdir(t_ls *node, t_dir *tmp)
 		return ;
 	}
 	infoprint(node, tmp);
+	if (node->a == 0 && filecount(tmp) <= 2)
+		return ;
 	file = tmp->files;
 	while (file != NULL)
 	{
