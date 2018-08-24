@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 16:17:35 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 12:29:47 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 13:13:02 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,32 @@ int		recalibrate(t_dir *dir)
 	return (i);
 }
 
+int		findbestdirsprocess(t_statinfo *file, t_dir *td, char **ret, int max)
+{
+	int			i;
+
+	i = 0;
+	if (S_ISDIR(file->stinfo.st_mode) == 1)
+	{
+		while (td->comp[i] != NULL)
+		{
+			if (i < max && ft_strcmp(td->comp[i], file->name) == 0)
+			{
+				i = -1;
+				break ;
+			}
+			else
+				i++;
+		}
+	}
+	if (i > 0)
+	{
+		*ret = ft_strdup(file->name);
+		return (1);
+	}
+	return (0);
+}
+
 char	*findbestdirs(t_ls *node)
 {
 	t_dir		*tmpdir;
@@ -49,25 +75,9 @@ char	*findbestdirs(t_ls *node)
 		recalibrate(tmpdir);
 	while (file)
 	{
-		if (S_ISDIR(file->stinfo.st_mode) == 1)
-		{
-			i = 0;
-			while (tmpdir->comp[i] != NULL)
-			{
-				if (i < max && ft_strcmp(tmpdir->comp[i], file->name) == 0)
-				{
-					i = -1;
-					break ;
-				}
-				else
-					i++;
-			}
-			if (i >= 0)
-			{
-				ret = ft_strdup(file->name);
-				break ;
-			}
-		}
+		i = findbestdirsprocess(file, tmpdir, &ret, max);
+		if (i > 0)
+			break ;
 		file = file->next;
 	}
 	if (ret != NULL)
