@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 16:13:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 13:25:37 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 14:32:08 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,12 @@ void	printdir(t_ls *node, t_dir *tmp)
 	int			hardlinklen;
 
 	sortfile(node, tmp);
+	if (node->a == 0 && filecount(tmp) <= 2)
+		return ;
 	sizelen = biggestfilesize(tmp) + 1;
 	hardlinklen = biggesthardlinksize(tmp);
 	if (ft_strcmp(tmp->dirnam, node->dir->dirnam) != 0)
-	ft_printf("%s:\n", tmp->fulldir);
+		ft_printf("%s:\n", tmp->fulldir);
 	if (node->l == 1)
 		ft_printf("total %d:\n", totalblocksizes(tmp));
 	file = tmp->files;

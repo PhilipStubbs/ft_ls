@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 17:02:26 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 09:49:18 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 14:31:39 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int		filecount(t_dir *dir)
 		tmp = tmp->next;
 		i++;
 	}
-	ft_printf("size[%d]\n", i);
 	return (i);
 }
 

@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:31:00 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 16:06:30 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 14:31:49 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,7 @@ t_dir				*findlast(t_ls *node);
 int					biggesthardlinksize(t_dir *dir);
 int					biggestfilesize(t_dir *dir);
 int					totalblocksizes(t_dir *dir);
+int					numberofdirs(t_dir *cdir);
+int					filecount(t_dir *dir);
 
 #endif
