@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/23 10:41:15 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 10:53:10 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 16:34:27 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,14 @@ int		totalblocksizes(t_dir *dir)
 		file = file->next;
 	}
 	return (ret);
+}
+
+int		ft_lllen(long long i)
+{
+	int		x;
+
+	x = 1;
+	while (i /= 10)
+		x++;
+	return (x);
 }

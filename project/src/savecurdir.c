@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 08:14:29 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 14:47:55 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 16:41:35 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	savecurdir(t_ls *node, char *dirname)
 	currentdir = opendir(cdir->fulldir);
 	if (currentdir == NULL)
 	{
-		ft_printf("opening error");
+		ft_printf("ft_ls: %s: Permission denied\n", dirname);
 		exit(1);
 	}
 	while (((nextdir = readdir(currentdir)) != NULL))

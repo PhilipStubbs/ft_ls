@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 16:13:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 16:22:47 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 16:35:21 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ void	spcfileprint(t_ls *node, t_dir *dir, int sizelen, int hardlinklen)
 	t_statinfo	*file;
 
 	file = dir->files;
-
+	sizelen = ft_lllen(dir->files->stinfo.st_size) + 1;
+	hardlinklen = ft_lllen(dir->files->stinfo.st_nlink) - 1;
 	while (file && ft_strcmp(file->name, node->spcfile) != 0)
 		file = file->next;
 	if (file == NULL && ft_strcmp(dir->fulldir, node->loc[node->inx]) == 0)
