@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 16:13:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 11:30:27 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 13:25:37 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 
 void	sortfile(t_ls *node, t_dir *tmp)
 {
-	// t_statinfo	*file;
-
-	// if (node->a == 0)
-		
 	if (node->r == 1 && node->t == 0 && node->s == 0)
 		revalphasortfile(tmp);
 	else if (node->r == 0 && node->t == 1 && node->s == 0)
@@ -46,32 +42,41 @@ void	printfull(t_statinfo *file, int slen, int hlen)
 	free(tmp);
 	users = getpwuid(file->stinfo.st_uid);
 	grp = getgrgid(file->stinfo.st_gid);
-	ft_printf("%s % *lld %s  %s % *s %s ", 
-	file->permis, hlen ,file->stinfo.st_nlink, users->pw_name, grp->gr_name, slen ,size, date);
+	ft_printf("%s % *lld %s  %s % *s %s ",
+	file->permis, hlen, file->stinfo.st_nlink, users->pw_name,
+	grp->gr_name, slen, size, date);
 	free(date);
 	free(size);
 }
 
 int		execheck(long long permis)
 {
-
-
-	if ((permis & S_IXGRP || permis & S_IXUSR || permis & S_IXOTH) && S_ISDIR(permis) == 0)
+	if ((permis & S_IXGRP || permis & S_IXUSR ||
+	permis & S_IXOTH) && S_ISDIR(permis) == 0)
 		return (1);
 	else
 		return (0);
+}
 
+void	atest(t_ls *node, t_statinfo **file)
+{
+	if (node->a == 0)
+	{
+		while ((*file) && (*file)->name[0] == '.')
+			(*file) = (*file)->next;
+	}
+}
 
-
-	// if (p != NULL)
-	// {
-	// 	if (p[3] == 'x' && p[6] == 'x' && p[9] == 'x')
-	// 		return (1);
-	// 	else
-	// 		return (0);
-	// }
-	// else
-	// 	return (0);
+void	theprinting(t_ls *node, t_statinfo *file, int sizelen, int hardlinklen)
+{
+	if (node->l)
+		printfull(file, sizelen, hardlinklen);
+	if (S_ISDIR(file->stinfo.st_mode) == 1 && node->g == 1)
+		ft_printf("{CYN}%s\n", file->name);
+	else if (execheck(file->stinfo.st_mode) == 1 && node->g == 1)
+		ft_printf("{MAG}%s\n", file->name);
+	else
+		ft_printf("%s\n", file->name);
 }
 
 void	printdir(t_ls *node, t_dir *tmp)
@@ -90,21 +95,10 @@ void	printdir(t_ls *node, t_dir *tmp)
 	file = tmp->files;
 	while (file != NULL)
 	{
-		if (node->a == 0)
-		{
-			while (file && file->name[0] == '.')
-				file = file->next;
-		}
+		atest(node, &file);
 		if (file == NULL)
 			break ;
-		if (node->l)
-			printfull(file, sizelen, hardlinklen);
-		if (S_ISDIR(file->stinfo.st_mode) == 1 && node->g == 1)
-			ft_printf("{CYN}%s\n", file->name);
-		else if (execheck(file->stinfo.st_mode) == 1 && node->g == 1)
-			ft_printf("{MAG}%s\n", file->name);
-		else
-			ft_printf("%s\n", file->name);
+		theprinting(node, file, sizelen, hardlinklen);
 		file = file->next;
 	}
 	ft_printf("\n");
