@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 16:13:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 16:35:21 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 17:17:55 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	sortfile(t_ls *node, t_dir *tmp)
 {
+	if (node->l == 1)
+		setusergrplen(tmp);
 	if (node->r == 1 && node->t == 0 && node->s == 0)
 		revalphasortfile(tmp);
 	else if (node->r == 0 && node->t == 1 && node->s == 0)
@@ -42,9 +44,9 @@ void	printfull(t_statinfo *file, int slen, int hlen)
 	free(tmp);
 	users = getpwuid(file->stinfo.st_uid);
 	grp = getgrgid(file->stinfo.st_gid);
-	ft_printf("%s % *lld %s  %s % *s %s ",
-	file->permis, hlen, file->stinfo.st_nlink, users->pw_name,
-	grp->gr_name, slen, size, date);
+	ft_printf("%s % *lld %-*s  %-*s % *s %s ",
+	file->permis, hlen, file->stinfo.st_nlink, file->urslen, users->pw_name,
+	file->grplen, grp->gr_name, slen, size, date);
 	free(date);
 	free(size);
 }

@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/23 10:41:15 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 16:34:27 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 17:18:24 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,70 @@ int		ft_lllen(long long i)
 	while (i /= 10)
 		x++;
 	return (x);
+}
+
+int		findusergroupsize(t_statinfo *file, int ug)
+{
+	struct passwd	*users;
+	struct group	*grp;
+
+	if (ug == 1)
+	{
+		grp = getgrgid(file->stinfo.st_gid);
+		return (ft_strlen(grp->gr_name));
+	}
+	users = getpwuid(file->stinfo.st_uid);
+	return (ft_strlen(users->pw_name));
+}
+
+void	setuserlen(t_dir *dir)
+{
+	t_statinfo	*file;
+	int			tmpsize;
+	int			ret;
+
+	file = dir->files;
+	ret = 0;
+	while (file)
+	{
+		tmpsize = findusergroupsize(file, 0);
+		if (tmpsize > ret)
+			ret = tmpsize;
+		file = file->next;
+	}
+	file = dir->files;
+	while (file)
+	{
+		file->urslen = ret;
+		file = file->next;
+	}
+}
+
+void	setgrplen(t_dir *dir)
+{
+	t_statinfo	*file;
+	int			tmpsize;
+	int			ret;
+
+	file = dir->files;
+	ret = 0;
+	while (file)
+	{
+		tmpsize = findusergroupsize(file, 1);
+		if (tmpsize > ret)
+			ret = tmpsize;
+		file = file->next;
+	}
+	file = dir->files;
+	while (file)
+	{
+		file->grplen = ret;
+		file = file->next;
+	}
+}
+
+void	setusergrplen(t_dir *dir)
+{
+	setuserlen(dir);
+	setgrplen(dir);
 }
