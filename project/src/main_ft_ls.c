@@ -6,23 +6,18 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:27:09 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 10:23:03 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 15:42:18 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-
 void	destroy(int error, t_ls *node)
 {
 	(void)error;
-	// if (node->dir)
-	// 	free(node->dir);
-	// free(node->loc);
 	if (node->loc)
 		freedouble(node->loc, ft_doublesize(node->loc));
 	free(node);
-
 }
 
 int		main(int arc, char **arv)
@@ -33,15 +28,14 @@ int		main(int arc, char **arv)
 	node = standardisedinitialised();
 	error = 0;
 	if (arc > 1)
-		error = validflags(node, arv +1);
+		error = validflags(node, arv + 1);
 	if (error >= 0 && node->loc == NULL)
 	{
+		node->dflt = 1;
 		node->loc = (char**)ft_memalloc(sizeof(char) * 2);
 		node->loc[0] = ft_strdup(".");
 		node->loc[1] = NULL;
 	}
-	
-	// ft_printf("l=[%d] a=[%d] r=[%d] t=[%d] g=[%d] R=[%d] g=[%d]\n", node->l,node->a,node->r,node->t,node->g,node->recv,node->g);
 	if (error >= 0)
 		ft_ls(node);
 	destroy(error, node);

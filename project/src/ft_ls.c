@@ -6,34 +6,90 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:41:02 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 11:22:48 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 15:42:26 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	printtest(t_ls *node, t_dir *tmp)
+// void	printtest(t_ls *node, t_dir *tmp)
+// {
+// 	t_statinfo	*tmp2;
+
+// 	while (tmp)
+// 	{
+// 		ft_printf("%s\n", tmp->fulldir);
+// 		tmp2 = tmp->files;
+// 		while (tmp2 != NULL)
+// 		{
+// 			if (node->l)
+// 				ft_printf("[%s]", tmp2->permis);
+
+// 			if (S_ISDIR(tmp2->stinfo.st_mode) == 1)
+// 				ft_printf("{CYN}%*c[%s]\n", 5, 0, tmp2->name);
+// 			else
+// 				ft_printf("%*c[%s]\n", 5, 0, tmp2->name);
+// 			tmp2 = tmp2->next;
+// 		}
+// 		ft_printf("\n");
+// 		tmp = tmp->next;
+// 	}
+// }
+int		slashcheck(t_ls *node, int i)
 {
-	t_statinfo	*tmp2;
+	int		count;
+	int		x;
 
-	while (tmp)
+	count = 0;
+	x = 0;
+	while (node->loc[i][x])
 	{
-		ft_printf("%s\n", tmp->fulldir);
-		tmp2 = tmp->files;
-		while (tmp2 != NULL)
-		{
-			if (node->l)
-				ft_printf("[%s]", tmp2->permis);
-
-			if (S_ISDIR(tmp2->stinfo.st_mode) == 1)
-				ft_printf("{CYN}%*c[%s]\n", 5 ,0,tmp2->name);
-			else
-				ft_printf("%*c[%s]\n", 5,0 ,tmp2->name);
-			tmp2 = tmp2->next;
-		}
-		ft_printf("\n");
-		tmp = tmp->next;
+		if (node->loc[i][x] == '/')
+			count++;
+		x++;
 	}
+	return (count);
+}
+
+int		validfilecheck(t_ls *node, int i)
+{
+	char	*tmp;
+	char	*dir;
+	int		x;
+
+	if (slashcheck(node, i) == 0)
+		return (0);
+	x = ft_strlen(node->loc[i]);
+	while (node->loc[i][x] != '/')
+		x--;
+	dir = ft_strsub(node->loc[i], 0, x);
+	tmp = ft_strsub(node->loc[i], x + 1, ft_strlen(node->loc[i]));
+	free(node->loc[i]);
+	node->loc[i] = ft_strdup(dir);
+	node->spcfile = ft_strdup(tmp);
+	free(dir);
+	free(tmp);
+	return (1);
+}
+
+int		validdircheck(t_ls *node, int i)
+{
+	DIR				*currentdir;
+	int				check;
+
+	if (node->dflt == 1)
+		return (1);
+
+	check = 1;
+	validfilecheck(node, i);
+	currentdir = opendir(node->loc[i]);
+	if (currentdir == NULL)
+	{
+		ft_printf("{RED}ft_ls: [%s]: No such file or directory", node->loc[i]);
+		return (0);
+	}
+	closedir(currentdir);
+	return (check);
 }
 
 void	ft_ls(t_ls *node)
@@ -44,6 +100,8 @@ void	ft_ls(t_ls *node)
 	i = 0;
 	while (node->loc[i])
 	{
+		if (validdircheck(node, i) == 0)
+			return ;
 		savecurdir(node, node->loc[i]);
 		cdir = node->dir;
 		if (node->l)
@@ -57,16 +115,14 @@ void	ft_ls(t_ls *node)
 		if (node->recv == 1)
 			recursivesearch(node);
 		else
-		{
 			printdir(node ,node->dir);
-		}
-		
 		while (node->dir)
 		{
 			destroydir(node->dir);
 			node->dir = node->dir->next;
 		}
-		
+		if (node->spcfile != NULL)
+			free(node->spcfile);
 		i++;
 	}
 }

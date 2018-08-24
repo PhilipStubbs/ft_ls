@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:09:38 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 16:04:53 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 14:37:14 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,26 +53,6 @@ int		isvalidflag(t_ls *node, char *arv)
 	}
 	if (arv[0] != '-')
 		return (2);
-		// node->loc = ft_strdup(arv);
-
-
-
-	// if (arv[1] == 'l')
-	// 	node->l = 1;
-	// else if (arv[1] == 'a')
-	// 	node->a = 1;
-	// else if (arv[1] == 'r')
-	// 	node->r = 1;
-	// else if (arv[1] == 't')
-	// 	node->t = 1;
-	// else if (arv[1] == 'g')
-	// 	node->g = 1;
-	// else if (arv[1] == 'R')
-	// 	node->recv = 1;
-	// else if (arv[1] == 'G')
-	// 	node->g = 1;
-	// else if (len == 1 || arv[0] != '-')
-	// 	return (-2);
 	return (1);
 }
 
