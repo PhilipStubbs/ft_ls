@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 16:13:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 15:53:22 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 16:22:47 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,18 +87,18 @@ void	infoprint(t_ls *node, t_dir *tmp)
 		ft_printf("total %d:\n", totalblocksizes(tmp));
 }
 
-
 void	spcfileprint(t_ls *node, t_dir *dir, int sizelen, int hardlinklen)
 {
 	t_statinfo	*file;
 
 	file = dir->files;
 
-	while (file && ft_strcmp(file->name , node->spcfile) != 0)
+	while (file && ft_strcmp(file->name, node->spcfile) != 0)
 		file = file->next;
 	if (file == NULL && ft_strcmp(dir->fulldir, node->loc[node->inx]) == 0)
 	{
-		ft_printf("{RED}ft_ls: %s: No such file or directory", node->spcfile);
+		ft_printf("{RED}ft_ls: %s/%s: No such file or directory",
+		node->loc[node->inx], node->spcfile);
 		return ;
 	}
 	infoprint(node, dir);

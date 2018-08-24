@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:41:02 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 15:55:56 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/24 16:20:30 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int		dircheck(t_ls *node, int i)
 	currentdir = opendir(node->loc[i]);
 	if (currentdir == NULL)
 	{
-		closedir(currentdir);
 		return (0);
 	}
 	closedir(currentdir);
@@ -71,7 +70,7 @@ int		validfilecheck(t_ls *node, int i)
 	char	*dir;
 	int		x;
 
-	if (slashcheck(node, i) == 0 || dircheck(node, i) == 1)
+	if ((slashcheck(node, i) == 0) || (dircheck(node, i) == 1))
 		return (0);
 	x = ft_strlen(node->loc[i]);
 	while (node->loc[i][x] != '/')
@@ -100,7 +99,6 @@ int		validdircheck(t_ls *node, int i)
 	if (currentdir == NULL)
 	{
 		ft_printf("{RED}ft_ls: [%s]: No such file or directory", node->loc[i]);
-		closedir(currentdir);
 		return (0);
 	}
 	closedir(currentdir);
