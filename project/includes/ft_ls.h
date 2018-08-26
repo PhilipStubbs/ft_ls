@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:31:00 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 17:05:15 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 12:03:06 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ t_dir				*findlast(t_ls *node);
 int					biggesthardlinksize(t_dir *dir);
 int					biggestfilesize(t_dir *dir);
 int					totalblocksizes(t_dir *dir);
-int					numberofdirs(t_dir *cdir);
+int					numberofdirs(t_ls *node, t_dir *cdir);
 int					filecount(t_dir *dir);
 void				setusergrplen(t_dir *dir);
 
