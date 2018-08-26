@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 16:13:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 15:13:58 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 15:31:03 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	infoprint(t_ls *node, t_dir *tmp)
 	if (node->a == 0 && filecount(tmp) <= 2)
 		return ;
 	if (node->l == 1 && node->spcfile == NULL)
-		ft_printf("total %d:\n", totalblocksizes(tmp));
+		ft_printf("total %d:\n", totalblocksizes(node, tmp));
 }
 
 void	spcfileprint(t_ls *node, t_dir *dir, int sizelen, int hardlinklen)

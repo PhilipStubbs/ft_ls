@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/23 10:41:15 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 15:08:56 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 15:34:57 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int		biggesthardlinksize(t_dir *dir)
 	return (ret);
 }
 
-int		totalblocksizes(t_dir *dir)
+int		totalblocksizes(t_ls *node, t_dir *dir)
 {
 	t_statinfo	*file;
 	int			ret;
@@ -65,7 +65,12 @@ int		totalblocksizes(t_dir *dir)
 	ret = 0;
 	while (file)
 	{
-		ret += file->stinfo.st_blocks;
+		if (node->a == 0 && (ft_strcmp(file->name, ".") != 0 &&
+		ft_strcmp(file->name, "..") != 0 &&
+		ft_strncmp(file->name, ".", 1) != 0))
+			ret += file->stinfo.st_blocks;
+		else if (node->a == 1)
+			ret += file->stinfo.st_blocks;
 		file = file->next;
 	}
 	return (ret);
