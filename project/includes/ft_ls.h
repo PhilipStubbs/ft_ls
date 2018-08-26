@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:31:00 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 15:32:53 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 15:58:52 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,9 @@ int					filecount(t_dir *dir);
 void				setusergrplen(t_dir *dir);
 void				revlastaccessortfile(t_dir *tmp);
 void				lastaccessortfile(t_dir *tmp);
+void				sortfile(t_ls *node, t_dir *tmp);
+void				findlinkinfo(t_statinfo *file);
+void				atest(t_ls *node, t_statinfo **file);
+int					execheck(long long permis);
 
 #endif
