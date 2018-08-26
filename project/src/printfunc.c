@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 16:13:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 18:37:21 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 14:54:18 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ void	sortfile(t_ls *node, t_dir *tmp)
 		sizesortfile(tmp);
 	else if (node->s == 1 && node->r == 1)
 		revsizesortfile(tmp);
+	else if (node->u == 1 && node->r == 0)
+		lastaccessortfile(tmp);
+	else if (node->u == 1 && node->r == 1)
+		revlastaccessortfile(tmp);
 	else
 		alphasortfile(tmp);
 }
@@ -39,7 +43,10 @@ void	printfull(t_statinfo *file, int slen, int hlen)
 	char			*tmp;
 
 	size = ft_lltoa(file->stinfo.st_size);
-	tmp = epochtostring(file->stinfo.st_mtimespec.tv_sec);
+	if (file->u == 1)
+		tmp = epochtostring(file->stinfo.st_atimespec.tv_sec);
+	else
+		tmp = epochtostring(file->stinfo.st_mtimespec.tv_sec);
 	date = ft_strsub(tmp, 4, 12);
 	free(tmp);
 	users = getpwuid(file->stinfo.st_uid);
@@ -69,11 +76,22 @@ void	atest(t_ls *node, t_statinfo **file)
 	}
 }
 
+void	findlinkinfo(t_statinfo *file)
+{
+	char	buff[1024];
+	int		i;
+
+	
+	i = readlink(file->fulldir,buff, 1023);
+	buff[i] = '\0';
+	ft_printf(" -> %s", buff);
+
+}
+
 void	theprinting(t_ls *node, t_statinfo *file, int sizelen, int hardlinklen)
 {
 	if (node->l)
 		printfull(file, sizelen, hardlinklen);
-
 	if (S_ISDIR(file->stinfo.st_mode) == 1 && node->g == 1 && node->spcfile)
 		ft_printf("{CYN}%s/", node->loc[node->inx]);
 	else if (execheck(file->stinfo.st_mode) == 1 && node->g == 1  && node->spcfile)
@@ -81,11 +99,14 @@ void	theprinting(t_ls *node, t_statinfo *file, int sizelen, int hardlinklen)
 	else if (node->spcfile)
 		ft_printf("%s/", node->loc[node->inx]);
 	if (S_ISDIR(file->stinfo.st_mode) == 1 && node->g == 1)
-		ft_printf("{CYN}%s\n", file->name);
+		ft_printf("{CYN}%s", file->name);
 	else if (execheck(file->stinfo.st_mode) == 1 && node->g == 1)
-		ft_printf("{MAG}%s\n", file->name);
+		ft_printf("{MAG}%s", file->name);
 	else
-		ft_printf("%s\n", file->name);
+		ft_printf("%s", file->name);
+	if (file->d_type == DT_LNK)
+		findlinkinfo(file);
+	ft_printf("\n");
 }
 
 void	infoprint(t_ls *node, t_dir *tmp)

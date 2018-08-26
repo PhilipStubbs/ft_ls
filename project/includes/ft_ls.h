@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:31:00 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 13:24:18 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 14:45:46 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef	struct		s_info
 	int				d_type;
 	int				urslen;
 	int				grplen;
+	int				u;
 	struct stat		stinfo;
 	struct s_info	*next;
 }					t_statinfo;
@@ -61,6 +62,7 @@ typedef	struct		s_ls
 	int				t;
 	int				g;
 	int				s;
+	int				u;
 }					t_ls;
 
 t_ls				*standardisedinitialised(void);
@@ -97,6 +99,7 @@ int					totalblocksizes(t_dir *dir);
 int					numberofdirs(t_ls *node, t_dir *cdir);
 int					filecount(t_dir *dir);
 void				setusergrplen(t_dir *dir);
-
+void				revlastaccessortfile(t_dir *tmp);
+void				lastaccessortfile(t_dir *tmp);
 
 #endif

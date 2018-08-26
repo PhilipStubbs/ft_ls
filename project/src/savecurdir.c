@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 08:14:29 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 13:39:18 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 14:30:37 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 //          int64_t         st_qspare[2];     /* RESERVED: DO NOT USE! */
 //      };
 
-t_statinfo	*createnew_stat_link(t_dir *current, char *nam, int d_type)
+t_statinfo	*createnew_stat_link(t_ls *node, t_dir *current, char *nam, int d_type)
 {
 	t_statinfo	*ret;
 	char		*tmp;
@@ -50,23 +50,24 @@ t_statinfo	*createnew_stat_link(t_dir *current, char *nam, int d_type)
 	ret->name = ft_strdup(nam);
 	ret->fulldir = ft_strjoin(tmp, nam);
 	ret->d_type = d_type;
+	ret->u = node->u;
 	ret->next = NULL;
 	free(tmp);
 	return (ret);
 }
 
-void	savestat_link(char *name, t_dir *current, int d_type)
+void	savestat_link(t_ls *node, char *name, t_dir *current, int d_type)
 {
 	t_statinfo	*tmp;
 
 	tmp = current->files;
 	if (current->files == NULL)
-		current->files = createnew_stat_link(current, name, d_type);
+		current->files = createnew_stat_link(node, current, name, d_type);
 	else
 	{
 		while (tmp->next != NULL)
 			tmp = tmp->next;
-		tmp->next = createnew_stat_link(current, name, d_type);
+		tmp->next = createnew_stat_link(node, current, name, d_type);
 	}
 }
 
@@ -87,7 +88,7 @@ void	savecurdir(t_ls *node, char *dirname)
 	}
 	while (((nextdir = readdir(currentdir)) != NULL))
 	{
-		savestat_link(nextdir->d_name, cdir, nextdir->d_type);
+		savestat_link(node, nextdir->d_name, cdir, nextdir->d_type);
 		cfiles = cdir->files;
 		while (ft_strcmp(nextdir->d_name, cfiles->name) != 0)
 			cfiles = cfiles->next;

@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:09:38 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 14:37:14 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 14:46:27 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	feedintonode(t_ls *node, char *arv, int i)
 		node->g = 1;
 	if (arv[i] == 's')
 		node->s = 1;
+	if (arv[i] == 'u')
+		node->u = 1;
 }
 
 int		isvalidflag(t_ls *node, char *arv)
@@ -117,6 +119,3 @@ int		validflags(t_ls *node, char **arv)
 	}
 	return (ret);
 }
-
-
-	// 
