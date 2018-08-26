@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 16:17:35 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 16:57:30 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 17:12:58 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int		findbestdirsprocess(t_statinfo *file, t_dir *td, char **ret, int max)
 	i = 0;
 	if (file->d_type == 4)
 	{
-
 		while (td->comp[i] != NULL)
 		{
 			if ((i < max && ft_strcmp(td->comp[i], file->name) == 0))

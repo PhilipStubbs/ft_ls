@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/26 16:09:33 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 17:06:16 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 17:13:09 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ t_dir		*findlast(t_ls *node)
 
 t_statinfo	*skiphidden(t_statinfo *file)
 {
-
 	while (file && ft_strncmp(file->name, ".", 1) == 0)
 		file = file->next;
 	return (file);

@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:31:00 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 17:10:12 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 17:11:50 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include "ft_printf.h"
 # include <pwd.h>
 # include <grp.h>
-
 
 typedef	struct		s_info
 {

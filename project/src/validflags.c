@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:09:38 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 17:04:30 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 17:15:21 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,14 @@ char	**createnewchardouble(char **old, char *adding)
 	return (list);
 }
 
+void	printerror(char *arv)
+{
+	ft_printf("{RED}ft_ls: illegal option [%s]\n", arv);
+	ft_printf("{RED}usage:ft_ls ");
+	ft_printf("{RED}[-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] ");
+	ft_printf("{RED}[file ...]\n");
+}
+
 int		validflags(t_ls *node, char **arv)
 {
 	int	l;
@@ -107,12 +115,7 @@ int		validflags(t_ls *node, char **arv)
 				ft_printf("{RED}ft_ls: [%s]: No such file or directory",
 				arv[l]);
 			else
-			{
-				ft_printf("{RED}ft_ls: illegal option [%s]\n");
-				ft_printf("{RED}usage:ft_ls ");
-				ft_printf("{RED}[-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] ");
-				ft_printf("{RED}[file ...]\n");
-			}
+				printerror(arv[l]);
 			return (ret);
 		}
 		l++;

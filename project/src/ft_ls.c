@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:41:02 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 17:09:15 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 17:12:40 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int		validdircheck(t_ls *node, int i)
 
 	if (node->dflt == 1)
 		return (1);
-
 	check = 1;
 	validfilecheck(node, i);
 	currentdir = opendir(node->loc[i]);
@@ -90,21 +89,6 @@ int		validdircheck(t_ls *node, int i)
 	}
 	closedir(currentdir);
 	return (check);
-}
-
-void	creatpermissions(t_ls *node)
-{
-	t_dir	*cdir;
-
-	cdir = node->dir;
-	if (node->l)
-	{
-		while (cdir)
-		{
-			setpermission(cdir);
-			cdir = cdir->next;
-		}
-	}
 }
 
 void	ft_ls(t_ls *node)
