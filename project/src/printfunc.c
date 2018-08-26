@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 16:13:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 15:31:03 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 15:50:13 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,14 +104,14 @@ void	theprinting(t_ls *node, t_statinfo *file, int sizelen, int hardlinklen)
 		ft_printf("{GRN}%s", file->name);
 	else
 		ft_printf("%s", file->name);
-	if (file->d_type == DT_LNK)
+	if (file->d_type == DT_LNK && node->l == 1)
 		findlinkinfo(file);
 	ft_printf("\n");
 }
 
 void	infoprint(t_ls *node, t_dir *tmp)
 {
-	if (ft_strcmp(tmp->dirnam, node->dir->dirnam) != 0)
+	if (ft_strcmp(tmp->dirnam, node->dir->dirnam) != 0 || ft_doublesize(node->loc) > 1)
 		ft_printf("%s:\n", tmp->fulldir);
 	if (node->a == 0 && filecount(tmp) <= 2)
 		return ;
