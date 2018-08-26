@@ -6,13 +6,13 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 16:21:51 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 13:35:26 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 15:10:23 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	findpermission_part2(long long permis, char **ret, char *dir)
+void	findpermission_part2(long long  permis, char **ret, char *dir)
 {
 	if (permis & S_IWGRP)
 		*ret = dynamicstring(ret, "w");
@@ -60,7 +60,7 @@ void	filetype(int premis, char **ret)
 		*ret = dynamicstring(ret, "-");
 }
 
-char	*findpermission(int d_type, mode_t permis, char *dir)
+char	*findpermission(int d_type, long long permis, char *dir)
 {
 	char	*ret;
 
@@ -102,8 +102,6 @@ void	setpermission(t_dir *cdir)
 	tmp = cdir->files;
 	while (tmp != NULL)
 	{
-		if (S_ISLNK(tmp->stinfo.st_mode) == 1)
-			ft_printf("HERE [%s]\n", tmp->name);
 		if (tmp->permis == NULL)
 			tmp->permis = findpermission(tmp->d_type, tmp->stinfo.st_mode, tmp->fulldir);
 		tmp = tmp->next;

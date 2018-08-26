@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 08:14:29 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 14:30:37 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 15:08:46 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,10 @@ void	savecurdir(t_ls *node, char *dirname)
 		cfiles = cdir->files;
 		while (ft_strcmp(nextdir->d_name, cfiles->name) != 0)
 			cfiles = cfiles->next;
-		stat(cfiles->fulldir, &(cfiles->stinfo));
+		if (nextdir->d_type == DT_LNK)
+			lstat(cfiles->fulldir, &(cfiles->stinfo));
+		else
+			stat(cfiles->fulldir, &(cfiles->stinfo));
 	}
 	closedir(currentdir);
 }
-
-
-// if (currentdir == NULL)
-// 	{
-// 		ft_printf("opening error");
-// 		exit(1);
-// 	}

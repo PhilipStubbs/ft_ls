@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 16:13:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 14:54:18 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 15:13:58 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,9 @@ void	findlinkinfo(t_statinfo *file)
 	char	buff[1024];
 	int		i;
 
-	
-	i = readlink(file->fulldir,buff, 1023);
+	i = readlink(file->fulldir, buff, 1023);
 	buff[i] = '\0';
 	ft_printf(" -> %s", buff);
-
 }
 
 void	theprinting(t_ls *node, t_statinfo *file, int sizelen, int hardlinklen)
@@ -94,14 +92,16 @@ void	theprinting(t_ls *node, t_statinfo *file, int sizelen, int hardlinklen)
 		printfull(file, sizelen, hardlinklen);
 	if (S_ISDIR(file->stinfo.st_mode) == 1 && node->g == 1 && node->spcfile)
 		ft_printf("{CYN}%s/", node->loc[node->inx]);
-	else if (execheck(file->stinfo.st_mode) == 1 && node->g == 1  && node->spcfile)
+	else if (execheck(file->stinfo.st_mode) == 1 && node->g == 1 && node->spcfile)
 		ft_printf("{MAG}%s/", node->loc[node->inx]);
 	else if (node->spcfile)
 		ft_printf("%s/", node->loc[node->inx]);
-	if (S_ISDIR(file->stinfo.st_mode) == 1 && node->g == 1)
+	if (S_ISDIR(file->stinfo.st_mode) == 1 && node->g == 1 && file->d_type == 4)
 		ft_printf("{CYN}%s", file->name);
-	else if (execheck(file->stinfo.st_mode) == 1 && node->g == 1)
+	else if (execheck(file->stinfo.st_mode) == 1 && node->g == 1 && file->d_type != DT_LNK)
 		ft_printf("{MAG}%s", file->name);
+	else if (file->d_type == DT_LNK && node->g == 1)
+		ft_printf("{GRN}%s", file->name);
 	else
 		ft_printf("%s", file->name);
 	if (file->d_type == DT_LNK)
