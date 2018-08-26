@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:31:00 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 15:58:52 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 16:12:18 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,10 @@ void				sortfile(t_ls *node, t_dir *tmp);
 void				findlinkinfo(t_statinfo *file);
 void				atest(t_ls *node, t_statinfo **file);
 int					execheck(long long permis);
+int					numberofdirs(t_ls *node, t_dir *cdir);
+void				recursivesearchpreprocess(t_ls *node, int *mar, int *i);
+t_statinfo			*skiphidden(t_statinfo *file);
+t_dir				*findbestdirsbody(t_ls *node , t_statinfo **file);
+int					recalibrate(t_dir *dir);
 
 #endif
