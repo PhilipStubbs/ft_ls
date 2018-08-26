@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 10:56:53 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/22 12:17:58 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 13:39:43 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	savedir_link(t_ls *node, char *name)
 	t_dir	*tmp;
 	char	*tmpstr;
 	t_dir	*cdir;
-	// int		size;
 
 	tmp = node->dir;
 	if (node->dir == NULL)
@@ -70,21 +69,17 @@ void	savedir_link(t_ls *node, char *name)
 			tmp = tmp->next;
 		tmp->next = createdir_link(name);
 	}
-	// size = dircount(node) - 1;
 	cdir = node->dir;
 	tmpstr = ft_strnew(1);
-	while (cdir->next)   //size > 0)// ft_strcmp(cdir->dirnam, name) != 0  )
+	while (cdir->next) 
 	{
 		tmpstr = dynamicstring(&tmpstr, cdir->dirnam);
 		tmpstr = dynamicstring(&tmpstr, "/");
 		cdir = cdir->next;
-		// size--;
 	}
 	tmpstr = dynamicstring(&tmpstr, cdir->dirnam);
 	if (cdir->fulldir == NULL)
 		cdir->fulldir = ft_strdup(tmpstr);
-	// ft_printf("dirname[%s]\n", cdir->fulldir);
-	// ft_printf("nanm[%s] dir[%s]\n",cdir->dirnam, cdir->fulldir);
 	free(tmpstr);
 }
 

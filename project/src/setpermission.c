@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 16:21:51 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/23 14:08:15 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 13:35:26 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,32 @@ void	findpermission_part2(long long permis, char **ret, char *dir)
 		*ret = dynamicstring(ret, " ");
 }
 
-char	*findpermission(long long permis, char *dir)
+void	filetype(int premis, char **ret)
+{
+	if (premis == DT_REG)
+		*ret = dynamicstring(ret, "-");
+	else if (premis == DT_DIR)
+		*ret = dynamicstring(ret, "d");
+	else if (premis == DT_LNK)
+		*ret = dynamicstring(ret, "l");
+	else if (premis == DT_BLK)
+		*ret = dynamicstring(ret, "b");
+	else if (premis == DT_CHR)
+		*ret = dynamicstring(ret, "c");
+	else if (premis == DT_SOCK)
+		*ret = dynamicstring(ret, "s");
+	else if (premis == DT_FIFO)
+		*ret = dynamicstring(ret, "p");
+	else
+		*ret = dynamicstring(ret, "-");
+}
+
+char	*findpermission(int d_type, mode_t permis, char *dir)
 {
 	char	*ret;
 
 	ret = ft_strnew(1);
-	if (S_ISDIR(permis))
-		ret = dynamicstring(&ret, "d");
-	else
-		ret = dynamicstring(&ret, "-");
+	filetype(d_type, &ret);
 	if (permis & S_IRUSR)
 		ret = dynamicstring(&ret, "r");
 	else
@@ -88,7 +105,7 @@ void	setpermission(t_dir *cdir)
 		if (S_ISLNK(tmp->stinfo.st_mode) == 1)
 			ft_printf("HERE [%s]\n", tmp->name);
 		if (tmp->permis == NULL)
-			tmp->permis = findpermission(tmp->stinfo.st_mode, tmp->fulldir);
+			tmp->permis = findpermission(tmp->d_type, tmp->stinfo.st_mode, tmp->fulldir);
 		tmp = tmp->next;
 	}
 }

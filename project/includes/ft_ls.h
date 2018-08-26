@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:31:00 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 12:03:06 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 13:24:18 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef	struct		s_info
 	char			*fulldir;
 	char			*date;
 	char			*permis;
+	int				d_type;
 	int				urslen;
 	int				grplen;
 	struct stat		stinfo;

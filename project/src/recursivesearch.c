@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 16:17:35 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 12:05:30 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 14:05:33 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,22 @@ int		recalibrate(t_dir *dir)
 int		findbestdirsprocess(t_statinfo *file, t_dir *td, char **ret, int max)
 {
 	int			i;
-	// char		tmp[1024];
 
 	i = 0;
-	// ft_printf("[%s]\n", file->fulldir);
-	if (S_ISDIR(file->stinfo.st_mode) == 1)
+	if (file->d_type == 4)
 	{
-		// if (readlink(file->fulldir, tmp, 50) <= 1)  // S_ISLNK(file->stinfo.st_mode) == 0) //!(S_IFLNK & (file->stinfo.st_mode)))
-		// {
-			while (td->comp[i] != NULL)
+
+		while (td->comp[i] != NULL)
+		{
+			if ((i < max && ft_strcmp(td->comp[i], file->name) == 0))
 			{
-				if ((i < max && ft_strcmp(td->comp[i], file->name) == 0))
-				{
-					i = -1;
-					break ;
-				}
-				else
-					i++;
+				i = -1;
+				break ;
 			}
-		// }
+			else
+				i++;
+		}
 	}
-	// ft_printf("[%d]\n", i);
 	if (i > 0)
 	{
 		*ret = ft_strdup(file->name);
@@ -90,7 +85,7 @@ char	*findbestdirs(t_ls *node)
 	while (file)
 	{
 		if (node->a == 0)
-				file = skiphidden(file);
+			file = skiphidden(file);
 		if (file == NULL)
 			break ;
 		i = findbestdirsprocess(file, tmpdir, &ret, max);
@@ -126,12 +121,17 @@ int		numberofdirs(t_ls *node, t_dir *cdir)
 		if (S_ISDIR(file->stinfo.st_mode) == 1 &&
 		ft_strcmp(file->name, ".") != 0 &&
 		ft_strcmp(file->name, "..") != 0 &&
-		ft_strncmp(file->name, ".", 1) != 0)
+		ft_strncmp(file->name, ".", 1) != 0
+		&& file->d_type == 4)
 			count++;
-		if (node->a == 1 && ft_strncmp(file->name, ".", 1) == 1)
+		if (node->a == 1 && ft_strncmp(file->name, ".", 1) == 0 &&
+		ft_strcmp(file->name, ".") != 0 &&
+		ft_strcmp(file->name, "..") != 0)
 			count++;
 		file = file->next;
 	}
+	if (node->a == 1)
+		count--;
 	return (count);
 }
 
@@ -140,11 +140,8 @@ void	recursivesearchpreprocess(t_ls *node, int *maxbasedir, int *i)
 	printdir(node, node->dir);
 	*i = 0;
 	if (node->a == 0)
-	{
 		recalibrate(node->dir);
-		*i = 0;
-	}
-	*maxbasedir = (numberofdirs(node ,node->dir));
+	*maxbasedir = (numberofdirs(node, node->dir));
 }
 
 void	recursivesearch(t_ls *node)
