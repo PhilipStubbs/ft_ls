@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/26 16:09:33 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 17:13:09 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 17:40:06 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,10 @@ int			numberofdirs(t_ls *node, t_dir *cdir)
 			count++;
 		if (node->a == 1 && ft_strncmp(file->name, ".", 1) == 0 &&
 		ft_strcmp(file->name, ".") != 0 &&
-		ft_strcmp(file->name, "..") != 0)
+		ft_strcmp(file->name, "..") != 0 && file->d_type == 4)
 			count++;
 		file = file->next;
 	}
-	if (node->a == 1)
-		count--;
 	return (count);
 }
 

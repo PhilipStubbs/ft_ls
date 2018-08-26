@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:09:38 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 17:15:21 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 17:51:05 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,22 @@ void	feedintonode(t_ls *node, char *arv, int i)
 		node->u = 1;
 }
 
+int		allvalid(char *arv)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	while (arv[i])
+	{
+		tmp = ft_strchr("-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1", arv[i]);
+		if (tmp == NULL)
+			return (-1);
+		i++;
+	}
+	return (1);
+}
+
 int		isvalidflag(t_ls *node, char *arv)
 {
 	int	len;
@@ -47,6 +63,8 @@ int		isvalidflag(t_ls *node, char *arv)
 		return (-1);
 	if (arv[0] == '-')
 	{
+		if (allvalid(arv) == -1)
+			return (-1);
 		while (arv[i])
 		{
 			feedintonode(node, arv, i);

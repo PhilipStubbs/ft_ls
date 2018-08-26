@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 16:13:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 15:58:59 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 18:11:38 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,26 @@ void	theprinting(t_ls *node, t_statinfo *file, int sizelen, int hardlinklen)
 	ft_printf("\n");
 }
 
+int		hiddenfilecheck(t_ls *node, t_dir *dir)
+{
+	t_statinfo	*file;
+	int			i;
+
+	i = 0;
+	if (node->a == 0)
+		return (0);
+	file = dir->files;
+	while (file)
+	{
+		if (ft_strcmp(file->name, ".") != 0 &&
+		ft_strcmp(file->name, "..") != 0 &&
+		ft_strncmp(file->name, ".", 1) != 0)
+			i++;
+		file = file->next;
+	}
+	return (i);
+}
+
 void	infoprint(t_ls *node, t_dir *tmp)
 {
 	if (ft_strcmp(tmp->dirnam, node->dir->dirnam) != 0 ||
@@ -68,7 +88,7 @@ void	infoprint(t_ls *node, t_dir *tmp)
 		ft_printf("%s:\n", tmp->fulldir);
 	if (node->a == 0 && filecount(tmp) <= 2)
 		return ;
-	if (node->l == 1 && node->spcfile == NULL)
+	if (node->l == 1 && node->spcfile == NULL && hiddenfilecheck(node, tmp) > 0)
 		ft_printf("total %d:\n", totalblocksizes(node, tmp));
 }
 

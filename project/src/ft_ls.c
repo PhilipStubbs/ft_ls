@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:41:02 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 17:12:40 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 18:06:57 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ int		validdircheck(t_ls *node, int i)
 	currentdir = opendir(node->loc[i]);
 	if (currentdir == NULL)
 	{
-		ft_printf("{RED}ft_ls: [%s]: No such file or directory", node->loc[i]);
+		if (node->spcfile == NULL)
+			ft_printf("{RED}ft_ls: %s: No such file or directory", node->loc[i]);
+		else
+			ft_printf("{RED}ft_ls: %s/%s: No such file or directory", node->loc[i], node->spcfile);
 		return (0);
 	}
 	closedir(currentdir);
