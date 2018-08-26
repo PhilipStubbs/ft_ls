@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 10:56:53 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 13:39:43 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 17:05:31 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	savedir_link(t_ls *node, char *name)
 	}
 	cdir = node->dir;
 	tmpstr = ft_strnew(1);
-	while (cdir->next) 
+	while (cdir->next)
 	{
 		tmpstr = dynamicstring(&tmpstr, cdir->dirnam);
 		tmpstr = dynamicstring(&tmpstr, "/");

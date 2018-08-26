@@ -6,13 +6,13 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 16:21:51 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 15:10:23 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 16:54:37 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	findpermission_part2(long long  permis, char **ret, char *dir)
+void	findpermission_part2(long long permis, char **ret, char *dir)
 {
 	if (permis & S_IWGRP)
 		*ret = dynamicstring(ret, "w");

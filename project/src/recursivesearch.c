@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 16:17:35 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 16:12:02 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 16:57:30 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	recursivesearch(t_ls *node)
 	int		maxbasedir;
 
 	recursivesearchpreprocess(node, &maxbasedir, &i);
-	while (i < maxbasedir)
+	while (i < maxbasedir && node->dflt == 0)
 	{
 		nextdir = findbestdirs(node);
 		if (nextdir != NULL)

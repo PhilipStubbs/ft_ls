@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:41:02 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/24 18:32:45 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 17:09:15 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,23 @@ int		validdircheck(t_ls *node, int i)
 	return (check);
 }
 
-void	ft_ls(t_ls *node)
+void	creatpermissions(t_ls *node)
 {
 	t_dir	*cdir;
+
+	cdir = node->dir;
+	if (node->l)
+	{
+		while (cdir)
+		{
+			setpermission(cdir);
+			cdir = cdir->next;
+		}
+	}
+}
+
+void	ft_ls(t_ls *node)
+{
 	int		i;
 
 	i = 0;
@@ -103,30 +117,18 @@ void	ft_ls(t_ls *node)
 		node->dflt = 0;
 		node->inx = i;
 		if (validdircheck(node, i) == 0)
-		{
 			return ;
-		}
 		savecurdir(node, node->loc[i]);
-		cdir = node->dir;
-		if (node->l)
-		{
-			while (cdir)
-			{
-				setpermission(cdir);
-				cdir = cdir->next;
-			}
-		}
+		creatpermissions(node);
 		if (node->recv == 1)
 			recursivesearch(node);
 		else
-			printdir(node ,node->dir);
+			printdir(node, node->dir);
 		while (node->dir)
 		{
 			destroydir(node->dir);
 			node->dir = node->dir->next;
 		}
-		// if (node->spcfile != NULL)
-		// 	free(node->spcfile);
 		i++;
 	}
 }

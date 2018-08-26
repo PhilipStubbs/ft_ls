@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:09:38 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 14:46:27 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 17:04:30 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ char	**createnewchardouble(char **old, char *adding)
 	return (list);
 }
 
-
 int		validflags(t_ls *node, char **arv)
 {
 	int	l;
@@ -105,7 +104,8 @@ int		validflags(t_ls *node, char **arv)
 		if (ret < 1)
 		{
 			if (ret == -2)
-				ft_printf("{RED}ft_ls: [%s]: No such file or directory", arv[l]);
+				ft_printf("{RED}ft_ls: [%s]: No such file or directory",
+				arv[l]);
 			else
 			{
 				ft_printf("{RED}ft_ls: illegal option [%s]\n");

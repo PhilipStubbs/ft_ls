@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   epochtostring.c                                    :+:      :+:    :+:   */
+/*   ft_ls_support.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/20 08:12:57 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 17:05:10 by pstubbs          ###   ########.fr       */
+/*   Created: 2018/08/26 17:09:45 by pstubbs           #+#    #+#             */
+/*   Updated: 2018/08/26 17:10:03 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-char	*epochtostring(long long epoch)
+void	creatpermissions(t_ls *node)
 {
-	char		*ret;
-	char		*tmp;
-	int			len;
-	time_t		c;
+	t_dir	*cdir;
 
-	c = (unsigned long long)epoch;
-	ret = ctime(&c);
-	len = ft_strlen(ret);
-	tmp = ft_strsub(ret, 0, (size_t)len - 1);
-	return (tmp);
+	cdir = node->dir;
+	if (node->l)
+	{
+		while (cdir)
+		{
+			setpermission(cdir);
+			cdir = cdir->next;
+		}
+	}
 }

@@ -6,13 +6,13 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/26 16:09:33 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 16:10:23 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 17:06:16 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int		numberofdirs(t_ls *node, t_dir *cdir)
+int			numberofdirs(t_ls *node, t_dir *cdir)
 {
 	t_statinfo	*file;
 	int			count;
@@ -39,7 +39,7 @@ int		numberofdirs(t_ls *node, t_dir *cdir)
 	return (count);
 }
 
-void	recursivesearchpreprocess(t_ls *node, int *maxbasedir, int *i)
+void		recursivesearchpreprocess(t_ls *node, int *maxbasedir, int *i)
 {
 	printdir(node, node->dir);
 	*i = 0;
@@ -48,7 +48,7 @@ void	recursivesearchpreprocess(t_ls *node, int *maxbasedir, int *i)
 	*maxbasedir = (numberofdirs(node, node->dir));
 }
 
-t_dir	*findlast(t_ls *node)
+t_dir		*findlast(t_ls *node)
 {
 	t_dir *cdir;
 
@@ -66,7 +66,7 @@ t_statinfo	*skiphidden(t_statinfo *file)
 	return (file);
 }
 
-t_dir	*findbestdirsbody(t_ls *node , t_statinfo **file)
+t_dir		*findbestdirsbody(t_ls *node, t_statinfo **file)
 {
 	t_dir *tmpdir;
 

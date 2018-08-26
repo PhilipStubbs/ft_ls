@@ -6,46 +6,18 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 08:14:29 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 15:08:46 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/26 16:54:03 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-	// char			*name;
-	// char			*date;
-	// char			*type;
-	// struct stat		stinfo;
-	// struct s_info	*next;
-
-
-	//    struct stat { /* when _DARWIN_FEATURE_64_BIT_INODE is defined */
-//          dev_t           st_dev;           /* ID of device containing file */
-//          mode_t          st_mode;          /* Mode of file (see below) */
-//          nlink_t         st_nlink;         /* Number of hard links */
-//          ino_t           st_ino;           /* File serial number */
-//          uid_t           st_uid;           /* User ID of the file */
-//          gid_t           st_gid;           /* Group ID of the file */
-//          dev_t           st_rdev;          /* Device ID */
-//          struct timespec st_atimespec;     /* time of last access */
-//          struct timespec st_mtimespec;     /* time of last data modification */
-//          struct timespec st_ctimespec;     /* time of last status change */
-//          struct timespec st_birthtimespec; /* time of file creation(birth) */
-//          off_t           st_size;          /* file size, in bytes */
-//          blkcnt_t        st_blocks;        /* blocks allocated for file */
-//          blksize_t       st_blksize;       /* optimal blocksize for I/O */
-//          uint32_t        st_flags;         /* user defined flags for file */
-//          uint32_t        st_gen;           /* file generation number */
-//          int32_t         st_lspare;        /* RESERVED: DO NOT USE! */
-//          int64_t         st_qspare[2];     /* RESERVED: DO NOT USE! */
-//      };
-
-t_statinfo	*createnew_stat_link(t_ls *node, t_dir *current, char *nam, int d_type)
+t_statinfo	*createnew_stat_link(t_ls *node, t_dir *c, char *nam, int d_type)
 {
 	t_statinfo	*ret;
 	char		*tmp;
 
-	tmp = ft_strjoin(current->fulldir, "/");
+	tmp = ft_strjoin(c->fulldir, "/");
 	ret = (t_statinfo*)ft_memalloc(sizeof(t_statinfo));
 	ret->name = ft_strdup(nam);
 	ret->fulldir = ft_strjoin(tmp, nam);
@@ -56,7 +28,7 @@ t_statinfo	*createnew_stat_link(t_ls *node, t_dir *current, char *nam, int d_typ
 	return (ret);
 }
 
-void	savestat_link(t_ls *node, char *name, t_dir *current, int d_type)
+void		savestat_link(t_ls *node, char *name, t_dir *current, int d_type)
 {
 	t_statinfo	*tmp;
 
@@ -71,7 +43,7 @@ void	savestat_link(t_ls *node, char *name, t_dir *current, int d_type)
 	}
 }
 
-void	savecurdir(t_ls *node, char *dirname)
+void		savecurdir(t_ls *node, char *dirname)
 {
 	DIR				*currentdir;
 	struct dirent	*nextdir;
