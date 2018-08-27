@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/26 16:55:06 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 16:55:33 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/27 08:08:36 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	revalphasortfile(t_dir *tmp)
 {
 	t_statinfo	*file;
 
+	alphasortfile(tmp);
 	file = tmp->files;
 	while (file)
 	{
@@ -51,6 +52,7 @@ void	revsizesortfile(t_dir *tmp)
 {
 	t_statinfo	*file;
 
+	sizesortfile(tmp);
 	file = tmp->files;
 	while (file)
 	{
@@ -87,6 +89,7 @@ void	revlastaccessortfile(t_dir *tmp)
 {
 	t_statinfo	*file;
 
+	lastaccessortfile(tmp);
 	file = tmp->files;
 	while (file)
 	{

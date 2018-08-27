@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 16:17:35 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 17:17:21 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/27 08:33:08 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	recursivesearch(t_ls *node)
 			savecurdir(node, nextdir);
 			findsetpermission(node, nextdir);
 			cdir = findlast(node);
+			ft_printf("\n");
 			printdir(node, cdir);
 			free(nextdir);
 		}

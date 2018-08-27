@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/26 17:02:41 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 17:06:01 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/27 08:29:38 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,24 @@ void	movelinktostart(t_dir *dir, char *name)
 	dir->files = newstart;
 }
 
-int		filecount(t_dir *dir)
+int		filecount(t_ls *node, t_dir *dir)
 {
-	t_statinfo	*tmp;
+	t_statinfo	*file;
 	int			i;
 
 	i = 0;
-	tmp = dir->files;
-	while (tmp)
+	file = dir->files;
+	while (file)
 	{
-		tmp = tmp->next;
+		if (ft_strcmp(file->name, ".") != 0 &&
+		ft_strcmp(file->name, "..") != 0 &&
+		ft_strncmp(file->name, ".", 1) != 0)
+			i++;
+		if (node->a == 1 && ft_strncmp(file->name, ".", 1) == 0 &&
+		ft_strcmp(file->name, ".") != 0 &&
+		ft_strcmp(file->name, "..") != 0)
+			i++;
+		file = file->next;
 		i++;
 	}
 	return (i);

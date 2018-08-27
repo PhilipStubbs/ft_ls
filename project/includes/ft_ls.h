@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:31:00 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 17:11:50 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/27 08:29:57 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef	struct		s_ls
 	char			*spcfile;
 	int				inx;
 	int				dflt;
+	int				lg;
 	int				l;
 	int				recv;
 	int				a;
@@ -96,7 +97,7 @@ int					biggesthardlinksize(t_dir *dir);
 int					biggestfilesize(t_dir *dir);
 int					totalblocksizes(t_ls *node, t_dir *dir);
 int					numberofdirs(t_ls *node, t_dir *cdir);
-int					filecount(t_dir *dir);
+int					filecount(t_ls *node, t_dir *dir);
 void				setusergrplen(t_dir *dir);
 void				revlastaccessortfile(t_dir *tmp);
 void				lastaccessortfile(t_dir *tmp);
@@ -110,7 +111,6 @@ t_statinfo			*skiphidden(t_statinfo *file);
 t_dir				*findbestdirsbody(t_ls *node, t_statinfo **file);
 int					recalibrate(t_dir *dir);
 void				movelinkbackbyone(t_dir *dir, t_statinfo *b, t_statinfo *c);
-int					filecount(t_dir *dir);
 void				movelinktostart(t_dir *dir, char *name);
 void				creatpermissions(t_ls *node);
 

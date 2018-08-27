@@ -6,13 +6,13 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 16:13:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 18:11:38 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/27 08:59:13 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	printfull(t_statinfo *file, int slen, int hlen)
+void	printfull(t_ls *node ,t_statinfo *file, int slen, int hlen)
 {
 	struct passwd	*users;
 	struct group	*grp;
@@ -29,17 +29,22 @@ void	printfull(t_statinfo *file, int slen, int hlen)
 	free(tmp);
 	users = getpwuid(file->stinfo.st_uid);
 	grp = getgrgid(file->stinfo.st_gid);
-	ft_printf("%s % *lld %-*s  %-*s % *s %s ",
-	file->permis, hlen, file->stinfo.st_nlink, file->urslen, users->pw_name,
-	file->grplen, grp->gr_name, slen, size, date);
+	if (node->lg == 1)
+		ft_printf("%s % *lld %-*s % *s %s ",
+		file->permis, hlen, file->stinfo.st_nlink,
+		file->grplen, grp->gr_name, slen, size, date);
+	else
+		ft_printf("%s % *lld %-*s  %-*s % *s %s ",
+		file->permis, hlen, file->stinfo.st_nlink, file->urslen, users->pw_name,
+		file->grplen, grp->gr_name, slen, size, date);
 	free(date);
 	free(size);
 }
 
 void	theprinting(t_ls *node, t_statinfo *file, int sizelen, int hardlinklen)
 {
-	if (node->l)
-		printfull(file, sizelen, hardlinklen);
+	if (node->l || node->lg == 1)
+		printfull(node ,file, sizelen, hardlinklen);
 	if (S_ISDIR(file->stinfo.st_mode) == 1 && node->g == 1 && node->spcfile)
 		ft_printf("{CYN}%s/", node->loc[node->inx]);
 	else if (execheck(file->stinfo.st_mode) == 1 &&
@@ -83,13 +88,13 @@ int		hiddenfilecheck(t_ls *node, t_dir *dir)
 
 void	infoprint(t_ls *node, t_dir *tmp)
 {
-	if (ft_strcmp(tmp->dirnam, node->dir->dirnam) != 0 ||
-	ft_doublesize(node->loc) > 1)
+	if ((ft_strcmp(tmp->dirnam, node->dir->dirnam) != 0 ||
+	ft_doublesize(node->loc) > 1))
 		ft_printf("%s:\n", tmp->fulldir);
-	if (node->a == 0 && filecount(tmp) <= 2)
+	if (node->a == 0 && filecount(node, tmp) <= 2)
 		return ;
-	if (node->l == 1 && node->spcfile == NULL && hiddenfilecheck(node, tmp) > 0)
-		ft_printf("total %d:\n", totalblocksizes(node, tmp));
+	if (node->l == 1 && node->spcfile == NULL)
+		ft_printf("total %d\n", totalblocksizes(node, tmp));
 }
 
 void	spcfileprint(t_ls *node, t_dir *dir, int sizelen, int hardlinklen)
@@ -129,7 +134,7 @@ void	printdir(t_ls *node, t_dir *tmp)
 		return ;
 	}
 	infoprint(node, tmp);
-	if (node->a == 0 && filecount(tmp) <= 2)
+	if (node->a == 0 && filecount(node, tmp) <= 0)
 		return ;
 	file = tmp->files;
 	while (file != NULL)
@@ -140,5 +145,5 @@ void	printdir(t_ls *node, t_dir *tmp)
 		theprinting(node, file, sizelen, hardlinklen);
 		file = file->next;
 	}
-	ft_printf("\n");
+	// ft_printf("\n");
 }

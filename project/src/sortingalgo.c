@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 17:02:26 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 17:03:37 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/27 08:47:07 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,9 @@ void	birthsortfile(t_dir *tmp)
 void	revbirthsortfile(t_dir *tmp)
 {
 	t_statinfo	*file;
-	int			lifes;
 
+	// birthsortfile(tmp);
 	file = tmp->files;
-	lifes = 3;
 	while (file)
 	{
 		if (file->next != NULL && file->stinfo.st_mtimespec.tv_sec >

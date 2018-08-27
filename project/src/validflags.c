@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:09:38 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/26 17:51:05 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/27 08:30:50 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	feedintonode(t_ls *node, char *arv, int i)
 	if (arv[i] == 't')
 		node->t = 1;
 	if (arv[i] == 'g')
-		node->g = 1;
+		node->lg = 1;
 	if (arv[i] == 'R')
 		node->recv = 1;
 	if (arv[i] == 'G')
@@ -42,7 +42,7 @@ int		allvalid(char *arv)
 	i = 0;
 	while (arv[i])
 	{
-		tmp = ft_strchr("-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1", arv[i]);
+		tmp = ft_strchr("-GglRartrsu", arv[i]);
 		if (tmp == NULL)
 			return (-1);
 		i++;
