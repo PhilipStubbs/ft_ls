@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 11:09:38 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/27 08:30:50 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/27 09:56:02 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		allvalid(char *arv)
 	i = 0;
 	while (arv[i])
 	{
-		tmp = ft_strchr("-GglRartrsu", arv[i]);
+		tmp = ft_strchr("-GRglartsu", arv[i]);
 		if (tmp == NULL)
 			return (-1);
 		i++;
@@ -76,40 +76,11 @@ int		isvalidflag(t_ls *node, char *arv)
 	return (1);
 }
 
-char	**createnewchardouble(char **old, char *adding)
-{
-	char	**list;
-	int		size;
-	int		i;
-
-	i = 0;
-	size = 1;
-	if (old == NULL)
-		list = (char**)ft_memalloc(sizeof(char *) * (size + 2));
-	else
-	{
-		size = ft_doublesize(old);
-		list = (char**)ft_memalloc(sizeof(char *) * (size + 2));
-		while (i <= size)
-		{
-			list[i] = ft_strdup(old[i]);
-			i++;
-			if (old[i] == NULL)
-				break ;
-		}
-	}
-	list[i] = ft_strdup(adding);
-	list[i + 1] = NULL;
-	if (old)
-		freedouble(old, size);
-	return (list);
-}
-
 void	printerror(char *arv)
 {
 	ft_printf("{RED}ft_ls: illegal option [%s]\n", arv);
 	ft_printf("{RED}usage:ft_ls ");
-	ft_printf("{RED}[-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] ");
+	ft_printf("{RED}[-GRglartsu] ");
 	ft_printf("{RED}[file ...]\n");
 }
 

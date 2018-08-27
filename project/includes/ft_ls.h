@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 10:31:00 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/27 08:29:57 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/27 10:18:19 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef	struct		s_ls
 }					t_ls;
 
 t_ls				*standardisedinitialised(void);
-void				savecurdir(t_ls *node, char *name);
+int					savecurdir(t_ls *node, char *name);
 char				*epochtostring(long long epoch);
 int					validflags(t_ls *node, char **arv);
 void				ft_ls(t_ls *node);
@@ -87,6 +87,7 @@ int					stringcomp(char *str1, char *str2);
 void				sizesortfile(t_dir *tmp);
 void				revsizesortfile(t_dir *tmp);
 int					ft_lllen(long long i);
+char				**createnewchardouble(char **old, char *adding);
 
 void				printtest(t_ls *node, t_dir *tmp);
 void				printdir(t_ls *node, t_dir *tmp);

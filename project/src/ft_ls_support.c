@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/26 17:09:45 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/27 08:24:02 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/27 09:12:59 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,33 @@ void	creatpermissions(t_ls *node)
 			cdir = cdir->next;
 		}
 	}
+}
+
+char	**createnewchardouble(char **old, char *adding)
+{
+	char	**list;
+	int		size;
+	int		i;
+
+	i = 0;
+	size = 1;
+	if (old == NULL)
+		list = (char**)ft_memalloc(sizeof(char *) * (size + 2));
+	else
+	{
+		size = ft_doublesize(old);
+		list = (char**)ft_memalloc(sizeof(char *) * (size + 2));
+		while (i <= size)
+		{
+			list[i] = ft_strdup(old[i]);
+			i++;
+			if (old[i] == NULL)
+				break ;
+		}
+	}
+	list[i] = ft_strdup(adding);
+	list[i + 1] = NULL;
+	if (old)
+		freedouble(old, size);
+	return (list);
 }

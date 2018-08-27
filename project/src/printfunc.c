@@ -6,13 +6,13 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 16:13:28 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/27 08:59:13 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/27 09:24:20 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	printfull(t_ls *node ,t_statinfo *file, int slen, int hlen)
+void	printfull(t_ls *node, t_statinfo *file, int slen, int hlen)
 {
 	struct passwd	*users;
 	struct group	*grp;
@@ -44,13 +44,13 @@ void	printfull(t_ls *node ,t_statinfo *file, int slen, int hlen)
 void	theprinting(t_ls *node, t_statinfo *file, int sizelen, int hardlinklen)
 {
 	if (node->l || node->lg == 1)
-		printfull(node ,file, sizelen, hardlinklen);
+		printfull(node, file, sizelen, hardlinklen);
 	if (S_ISDIR(file->stinfo.st_mode) == 1 && node->g == 1 && node->spcfile)
 		ft_printf("{CYN}%s/", node->loc[node->inx]);
 	else if (execheck(file->stinfo.st_mode) == 1 &&
 	node->g == 1 && node->spcfile)
 		ft_printf("{MAG}%s/", node->loc[node->inx]);
-	else if (node->spcfile)
+	else if (node->spcfile && ft_strcmp(node->loc[node->inx], ".") != 0)
 		ft_printf("%s/", node->loc[node->inx]);
 	if (S_ISDIR(file->stinfo.st_mode) == 1 && node->g == 1 && file->d_type == 4)
 		ft_printf("{CYN}%s", file->name);
@@ -66,31 +66,12 @@ void	theprinting(t_ls *node, t_statinfo *file, int sizelen, int hardlinklen)
 	ft_printf("\n");
 }
 
-int		hiddenfilecheck(t_ls *node, t_dir *dir)
-{
-	t_statinfo	*file;
-	int			i;
-
-	i = 0;
-	if (node->a == 0)
-		return (0);
-	file = dir->files;
-	while (file)
-	{
-		if (ft_strcmp(file->name, ".") != 0 &&
-		ft_strcmp(file->name, "..") != 0 &&
-		ft_strncmp(file->name, ".", 1) != 0)
-			i++;
-		file = file->next;
-	}
-	return (i);
-}
-
 void	infoprint(t_ls *node, t_dir *tmp)
 {
 	if ((ft_strcmp(tmp->dirnam, node->dir->dirnam) != 0 ||
 	ft_doublesize(node->loc) > 1))
-		ft_printf("%s:\n", tmp->fulldir);
+		if (node->spcfile == NULL)
+			ft_printf("%s:\n", tmp->fulldir);
 	if (node->a == 0 && filecount(node, tmp) <= 2)
 		return ;
 	if (node->l == 1 && node->spcfile == NULL)
@@ -145,5 +126,5 @@ void	printdir(t_ls *node, t_dir *tmp)
 		theprinting(node, file, sizelen, hardlinklen);
 		file = file->next;
 	}
-	// ft_printf("\n");
+	ft_printf("\n");
 }

@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 17:02:26 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/27 08:47:07 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/27 09:15:56 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	revbirthsortfile(t_dir *tmp)
 {
 	t_statinfo	*file;
 
-	// birthsortfile(tmp);
 	file = tmp->files;
 	while (file)
 	{

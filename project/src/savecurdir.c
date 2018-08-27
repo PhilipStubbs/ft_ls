@@ -6,7 +6,7 @@
 /*   By: pstubbs <pstubbs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 08:14:29 by pstubbs           #+#    #+#             */
-/*   Updated: 2018/08/27 08:48:43 by pstubbs          ###   ########.fr       */
+/*   Updated: 2018/08/27 10:27:36 by pstubbs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,13 @@ void		savestat_link(t_ls *node, char *name, t_dir *current, int d_type)
 	}
 }
 
-void		savecurdir(t_ls *node, char *dirname)
+int			returnerror(t_dir *cdir, char *dirname)
+{
+	return (ft_printf("%s:\nft_ls: %s: Permission denied\n\n",
+	cdir->fulldir, dirname));
+}
+
+int			savecurdir(t_ls *node, char *dirname)
 {
 	DIR				*currentdir;
 	struct dirent	*nextdir;
@@ -54,10 +60,7 @@ void		savecurdir(t_ls *node, char *dirname)
 	cdir = findlast(node);
 	currentdir = opendir(cdir->fulldir);
 	if (currentdir == NULL)
-	{
-		ft_printf("ft_ls: %s: Permission denied\n", dirname);
-		return ;
-	}
+		return (returnerror(cdir, dirname));
 	while (((nextdir = readdir(currentdir)) != NULL))
 	{
 		savestat_link(node, nextdir->d_name, cdir, nextdir->d_type);
@@ -70,4 +73,5 @@ void		savecurdir(t_ls *node, char *dirname)
 			stat(cfiles->fulldir, &(cfiles->stinfo));
 	}
 	closedir(currentdir);
+	return (1);
 }
